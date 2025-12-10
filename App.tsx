@@ -29,7 +29,7 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }} 
-              className="font-mono text-xl sm:text-2xl md:text-4xl mb-8 text-latte-100 overflow-hidden break-words"
+              className="font-mono text-2xl sm:text-3xl md:text-4xl mb-8 text-latte-100 overflow-hidden break-words"
             >
               <span className="text-accent-orange">function</span> <span className="text-accent-blue">About_Me</span>()
             </motion.h2>

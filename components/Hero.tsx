@@ -36,6 +36,20 @@ const Hero: React.FC = () => {
       
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-espresso-900 via-transparent to-transparent opacity-50" />
 
+      {/* Floating 3D Cube Wireframes */}
+      <motion.div 
+         animate={{ rotateX: 360, rotateY: 360 }}
+         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+         className="absolute right-[10%] top-[15%] w-24 h-24 border border-accent-orange/20 opacity-20 hidden md:block"
+         style={{ transformStyle: "preserve-3d" }}
+      />
+      <motion.div 
+         animate={{ rotateX: -360, rotateY: 360 }}
+         transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+         className="absolute right-[20%] bottom-[20%] w-16 h-16 border border-accent-blue/20 opacity-20 hidden md:block"
+         style={{ transformStyle: "preserve-3d" }}
+      />
+
       {/* Floating Code Decorations */}
       <motion.div style={{ y: bgY1 }} className="absolute right-10 top-[20%] font-mono text-xs text-latte-500 opacity-10 hidden md:block select-none z-0">
         <pre>{`
@@ -51,30 +65,31 @@ impl System {
          <pre>{`> cargo build --release`}</pre>
       </motion.div>
 
-      <div className="z-10 max-w-5xl relative w-full">
+      <div className="z-10 max-w-5xl relative w-full mt-[-10vh] md:mt-0">
         <motion.div 
           initial={{ opacity: 0, width: 0 }}
           animate={{ opacity: 1, width: "auto" }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="flex items-center gap-3 mb-6 overflow-hidden whitespace-nowrap"
+          className="flex items-center gap-3 mb-4 md:mb-6 overflow-hidden whitespace-nowrap"
         >
           <div className="h-[1px] w-8 md:w-12 bg-accent-orange"></div>
           <span className="font-mono text-accent-orange text-[10px] md:text-sm tracking-widest uppercase">System Online</span>
         </motion.div>
         
-        {/* Masked Text Reveal Effect replaced with Typing Stagger */}
-        <div className="mb-2 p-1 -m-1">
+        {/* Name Title 1 */}
+        <div className="mb-2 md:mb-2 p-1 -m-1">
            <h1 
-             className="font-mono font-bold text-4xl sm:text-6xl md:text-8xl text-latte-100 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
+             className="font-mono font-bold text-5xl sm:text-6xl md:text-8xl text-latte-100 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
              data-hover
            >
              <TypingText text="SHIHAB" delay={0.2} className="text-waveform" />
            </h1>
         </div>
         
+        {/* Name Title 2 */}
         <div className="mb-6 p-1 -m-1">
            <h1 
-             className="font-mono font-bold text-2xl sm:text-4xl md:text-8xl text-latte-500 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
+             className="font-mono font-bold text-4xl sm:text-5xl md:text-8xl text-latte-500 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap gap-x-3 md:gap-x-4"
              data-hover
            >
              <TypingText text="SHAHRIAR AION" delay={0.5} className="text-waveform" />
@@ -102,7 +117,7 @@ impl System {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 1.5 }}
-          className="mt-12 flex items-center gap-6"
+          className="mt-8 md:mt-12 flex items-center gap-6"
         >
           <Magnetic>
             <motion.a 
