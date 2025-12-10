@@ -1,0 +1,164 @@
+import React, { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import useSmoothScroll from '../hooks/useSmoothScroll';
+import { TypingText } from './TypingText';
+import { Magnetic } from './Magnetic';
+
+const Hero: React.FC = () => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollTo = useSmoothScroll();
+  
+  // Track scroll for parallax effects
+  const { scrollY } = useScroll();
+  
+  // Refined parallax values for smoother "stickiness"
+  const opacity = useTransform(scrollY, [0, 600], [1, 0]);
+  const scale = useTransform(scrollY, [0, 600], [1, 0.9]);
+  const y = useTransform(scrollY, [0, 600], [0, 150]);
+  const filter = useTransform(scrollY, [0, 600], ["blur(0px)", "blur(8px)"]);
+  
+  // Floating background elements movement
+  const bgY1 = useTransform(scrollY, [0, 1000], [0, -200]);
+  const bgY2 = useTransform(scrollY, [0, 1000], [0, -500]);
+
+  return (
+    <motion.section 
+      ref={containerRef}
+      style={{ opacity, scale, y, filter }}
+      className="sticky top-0 h-screen w-full flex flex-col justify-center items-start overflow-hidden bg-espresso-950 px-8 md:px-24 z-0 perspective-1000"
+    >
+      {/* Background Tech Grid - Animated */}
+      <motion.div 
+        animate={{ backgroundPosition: ["0px 0px", "40px 40px"] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+        className="absolute inset-0 bg-[size:40px_40px] bg-grid-pattern opacity-[0.03] pointer-events-none" 
+      />
+      
+      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-espresso-900 via-transparent to-transparent opacity-50" />
+
+      {/* Floating Code Decorations */}
+      <motion.div style={{ y: bgY1 }} className="absolute right-10 top-[20%] font-mono text-xs text-latte-500 opacity-10 hidden md:block select-none z-0">
+        <pre>{`
+impl System {
+  fn init() -> Self {
+    Self { status: "OK" }
+  }
+}
+        `}</pre>
+      </motion.div>
+      
+      <motion.div style={{ y: bgY2 }} className="absolute right-32 top-[60%] font-mono text-xs text-accent-green opacity-10 hidden md:block select-none z-0">
+         <pre>{`> cargo build --release`}</pre>
+      </motion.div>
+
+      <div className="z-10 max-w-5xl relative">
+        <motion.div 
+          initial={{ opacity: 0, width: 0 }}
+          animate={{ opacity: 1, width: "auto" }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="flex items-center gap-3 mb-6 overflow-hidden whitespace-nowrap"
+        >
+          <div className="h-[1px] w-12 bg-accent-orange"></div>
+          <span className="font-mono text-accent-orange text-sm tracking-widest uppercase">System Online</span>
+        </motion.div>
+        
+        {/* Masked Text Reveal Effect replaced with Typing Stagger */}
+        <div className="mb-2 p-1 -m-1">
+           <h1 
+             className="font-mono font-bold text-4xl md:text-8xl text-latte-100 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
+             data-hover
+           >
+             <TypingText text="SHIHAB" delay={0.2} className="text-waveform" />
+           </h1>
+        </div>
+        
+        <div className="mb-6 p-1 -m-1">
+           <h1 
+             className="font-mono font-bold text-3xl md:text-8xl text-latte-500 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
+             data-hover
+           >
+             <TypingText text="SHAHRIAR AION" delay={0.5} className="text-waveform" />
+             <motion.span 
+              initial={{ opacity: 0 }} 
+              animate={{ opacity: 1 }} 
+              transition={{ delay: 1 }}
+              className="cursor-blink text-accent-orange inline-block"
+             >_</motion.span>
+           </h1>
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1.2 }}
+          className="font-mono text-latte-400 text-sm md:text-base max-w-xl leading-relaxed border-l-2 border-espresso-700 pl-6 backdrop-blur-sm"
+        >
+          <span className="text-accent-blue">const</span> <span className="text-latte-200">engineer</span> = <span className="text-accent-green">"Full Stack & Cloud"</span>;<br/><br/>
+          Specializing in distributed systems, high-throughput APIs, and scalable infrastructure. 
+          Designing clean code with the precision of a perfect espresso pull.
+        </motion.div>
+
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 1.5 }}
+          className="mt-12 flex items-center gap-6"
+        >
+          <Magnetic>
+            <motion.a 
+              href="#work"
+              onClick={(e) => scrollTo(e, '#work')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="block group relative px-8 py-4 bg-transparent border border-latte-500/50 hover:border-accent-orange transition-colors cursor-none overflow-hidden"
+              data-hover
+            >
+               <span className="relative z-10 font-mono text-xs text-latte-100 group-hover:text-espresso-950 transition-colors font-bold tracking-widest">
+                 $ cd ./projects
+               </span>
+               <motion.div 
+                className="absolute inset-0 bg-accent-orange z-0"
+                initial={{ x: '-100%' }}
+                whileHover={{ x: '0%' }}
+                transition={{ type: 'tween', ease: 'circOut' }}
+               />
+               
+               {/* Corner Accents */}
+               <span className="absolute top-0 left-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
+               <span className="absolute bottom-0 right-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
+            </motion.a>
+          </Magnetic>
+          
+          <div className="text-[10px] font-mono text-latte-500 flex flex-col">
+            <motion.span animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }}>
+              Lat: 34ms
+            </motion.span>
+            <span>Uptime: 99.9%</span>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* Scroll Indicator */}
+      <motion.div 
+        className="absolute bottom-10 right-10 flex items-center gap-4"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 2, duration: 1 }}
+      >
+        <span className="font-mono text-[10px] text-latte-500 text-right">
+          SCROLL_DOWN<br/>
+          v.2.0.4
+        </span>
+        <div className="w-[1px] h-12 bg-latte-500/30 overflow-hidden relative">
+          <motion.div 
+            className="w-full h-1/2 bg-accent-orange absolute top-0"
+            animate={{ top: ['-100%', '100%'] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'linear' }}
+          />
+        </div>
+      </motion.div>
+    </motion.section>
+  );
+};
+
+export default Hero;
