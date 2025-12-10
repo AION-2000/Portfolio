@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal as TerminalIcon, X, Minus, Maximize2, ChevronRight } from 'lucide-react';
+import { Terminal as TerminalIcon, X, Minus, Maximize2 } from 'lucide-react';
 import { sendMessageToGemini } from '../services/geminiService';
 import { ChatMessage } from '../types';
 import { GenerateContentResponse } from '@google/genai';
