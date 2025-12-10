@@ -24,8 +24,22 @@ let aiInstance: GoogleGenAI | null = null;
 const getAIClient = (): GoogleGenAI => {
   if (!aiInstance) {
     const apiKey = process.env.API_KEY;
-    if (!apiKey) {
-      throw new Error("API Key not found. Please check your .env file.");
+
+    // Debug Logging (Safe to expose first few chars)
+    if (apiKey && apiKey.length > 0) {
+      console.log(`[Gemini Service] API Key detected: ${apiKey.substring(0, 4)}...`);
+    } else {
+      console.error("[Gemini Service] API Key is missing or empty.");
+    }
+
+    if (!apiKey || apiKey.trim() === "") {
+      throw new Error(
+        "API Key is missing. \n\n" +
+        "ACTION REQUIRED:\n" +
+        "1. Go to Vercel Dashboard > Settings > Environment Variables.\n" +
+        "2. Add 'VITE_GEMINI_API_KEY' with your actual key.\n" +
+        "3. IMPORTANT: Redeploy your project for changes to take effect."
+      );
     }
     aiInstance = new GoogleGenAI({ apiKey });
   }

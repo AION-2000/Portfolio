@@ -50,7 +50,7 @@ const Gallery: React.FC = () => {
         <div className="mb-24 flex items-end justify-between border-b border-espresso-700 pb-6">
           <div>
             <span className="font-mono text-accent-orange text-xs mb-2 block animate-pulse">● PROJECT INDEX</span>
-            <h2 className="font-mono text-4xl md:text-5xl text-latte-100 tracking-tighter">
+            <h2 className="font-mono text-xl sm:text-2xl md:text-5xl text-latte-100 tracking-tighter">
               git log <span className="text-latte-500">--oneline</span>
             </h2>
           </div>

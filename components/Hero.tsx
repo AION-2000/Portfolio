@@ -25,7 +25,7 @@ const Hero: React.FC = () => {
     <motion.section 
       ref={containerRef}
       style={{ opacity, scale, y, filter }}
-      className="sticky top-0 h-screen w-full flex flex-col justify-center items-start overflow-hidden bg-espresso-950 px-8 md:px-24 z-0 perspective-1000"
+      className="sticky top-0 h-screen w-full flex flex-col justify-center items-start overflow-hidden bg-espresso-950 px-4 md:px-24 z-0 perspective-1000"
     >
       {/* Background Tech Grid - Animated */}
       <motion.div 
@@ -51,21 +51,21 @@ impl System {
          <pre>{`> cargo build --release`}</pre>
       </motion.div>
 
-      <div className="z-10 max-w-5xl relative">
+      <div className="z-10 max-w-5xl relative w-full">
         <motion.div 
           initial={{ opacity: 0, width: 0 }}
           animate={{ opacity: 1, width: "auto" }}
           transition={{ duration: 1, delay: 0.2 }}
           className="flex items-center gap-3 mb-6 overflow-hidden whitespace-nowrap"
         >
-          <div className="h-[1px] w-12 bg-accent-orange"></div>
-          <span className="font-mono text-accent-orange text-sm tracking-widest uppercase">System Online</span>
+          <div className="h-[1px] w-8 md:w-12 bg-accent-orange"></div>
+          <span className="font-mono text-accent-orange text-[10px] md:text-sm tracking-widest uppercase">System Online</span>
         </motion.div>
         
         {/* Masked Text Reveal Effect replaced with Typing Stagger */}
         <div className="mb-2 p-1 -m-1">
            <h1 
-             className="font-mono font-bold text-4xl md:text-8xl text-latte-100 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
+             className="font-mono font-bold text-4xl sm:text-6xl md:text-8xl text-latte-100 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
              data-hover
            >
              <TypingText text="SHIHAB" delay={0.2} className="text-waveform" />
@@ -74,7 +74,7 @@ impl System {
         
         <div className="mb-6 p-1 -m-1">
            <h1 
-             className="font-mono font-bold text-3xl md:text-8xl text-latte-500 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
+             className="font-mono font-bold text-2xl sm:text-4xl md:text-8xl text-latte-500 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
              data-hover
            >
              <TypingText text="SHAHRIAR AION" delay={0.5} className="text-waveform" />
@@ -91,7 +91,7 @@ impl System {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="font-mono text-latte-400 text-sm md:text-base max-w-xl leading-relaxed border-l-2 border-espresso-700 pl-6 backdrop-blur-sm"
+          className="font-mono text-latte-400 text-xs sm:text-sm md:text-base max-w-xl leading-relaxed border-l-2 border-espresso-700 pl-4 md:pl-6 backdrop-blur-sm"
         >
           <span className="text-accent-blue">const</span> <span className="text-latte-200">engineer</span> = <span className="text-accent-green">"Full Stack & Cloud"</span>;<br/><br/>
           Specializing in distributed systems, high-throughput APIs, and scalable infrastructure. 
@@ -110,10 +110,10 @@ impl System {
               onClick={(e) => scrollTo(e, '#work')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="block group relative px-8 py-4 bg-transparent border border-latte-500/50 hover:border-accent-orange transition-colors cursor-none overflow-hidden"
+              className="block group relative px-6 py-3 md:px-8 md:py-4 bg-transparent border border-latte-500/50 hover:border-accent-orange transition-colors cursor-none overflow-hidden"
               data-hover
             >
-               <span className="relative z-10 font-mono text-xs text-latte-100 group-hover:text-espresso-950 transition-colors font-bold tracking-widest">
+               <span className="relative z-10 font-mono text-[10px] md:text-xs text-latte-100 group-hover:text-espresso-950 transition-colors font-bold tracking-widest">
                  $ cd ./projects
                </span>
                <motion.div 
@@ -140,12 +140,12 @@ impl System {
 
       {/* Scroll Indicator */}
       <motion.div 
-        className="absolute bottom-10 right-10 flex items-center gap-4"
+        className="absolute bottom-10 right-4 md:right-10 flex items-center gap-4"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 2, duration: 1 }}
       >
-        <span className="font-mono text-[10px] text-latte-500 text-right">
+        <span className="font-mono text-[10px] text-latte-500 text-right hidden sm:block">
           SCROLL_DOWN<br/>
           v.2.0.4
         </span>

@@ -56,11 +56,14 @@ const ChatWidget: React.FC = () => {
             msg.id === botMessageId ? { ...msg, isStreaming: false } : msg
         ));
 
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Gemini Chat Error:", error);
+      const errorMessage = error?.message || "Unknown error occurred";
+      
       setMessages(prev => [...prev, { 
         id: Date.now().toString(), 
         role: 'model', 
-        text: 'Error: Connection reset. Check standard output.' 
+        text: `Error: ${errorMessage}\n\n[System Diagnostic]: Check VITE_GEMINI_API_KEY configuration.` 
       }]);
     } finally {
       setIsLoading(false);

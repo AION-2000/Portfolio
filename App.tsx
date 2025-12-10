@@ -21,7 +21,7 @@ const AboutSection = () => {
   const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [10, 0, -10]);
 
   return (
-    <section ref={containerRef} id="about" className="py-32 px-6 md:px-12 max-w-6xl mx-auto border-t border-espresso-700">
+    <section ref={containerRef} id="about" className="py-24 md:py-32 px-6 md:px-12 max-w-6xl mx-auto border-t border-espresso-700">
       <div className="grid md:grid-cols-2 gap-12 items-start" style={{ perspective: '1000px' }}>
           <motion.div style={{ y: yText }}>
             <motion.h2 
@@ -29,7 +29,7 @@ const AboutSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }} 
-              className="font-mono text-4xl mb-8 text-latte-100 overflow-hidden"
+              className="font-mono text-xl sm:text-2xl md:text-4xl mb-8 text-latte-100 overflow-hidden break-words"
             >
               <span className="text-accent-orange">function</span> <span className="text-accent-blue">About_Me</span>()
             </motion.h2>
@@ -64,12 +64,12 @@ const AboutSection = () => {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="bg-espresso-800 p-6 rounded-sm border border-espresso-700 font-mono text-xs shadow-2xl hover:shadow-accent-orange/10 transition-shadow duration-500 transform-gpu"
+            className="bg-espresso-800 p-6 rounded-sm border border-espresso-700 font-mono text-xs shadow-2xl hover:shadow-accent-orange/10 transition-shadow duration-500 transform-gpu overflow-x-auto"
           >
             <div className="flex gap-2 mb-4 border-b border-espresso-700 pb-2">
                 <span className="text-latte-500">skills.json</span>
             </div>
-            <pre className="text-accent-green overflow-x-auto">
+            <pre className="text-accent-green">
 {`{
   "languages": [
     "Python", "Java", "C",
@@ -119,7 +119,7 @@ const ContactSection = () => {
   };
 
   return (
-    <section ref={containerRef} id="contact" className="py-32 px-6 bg-espresso-950 border-t border-espresso-700 relative overflow-hidden">
+    <section ref={containerRef} id="contact" className="py-24 md:py-32 px-6 bg-espresso-950 border-t border-espresso-700 relative overflow-hidden">
         <motion.div 
           style={{ y: bgY }}
           className="absolute inset-0 bg-[size:20px_20px] bg-grid-pattern opacity-10" 
@@ -139,7 +139,7 @@ const ContactSection = () => {
           </motion.span>
           <motion.h2 
             variants={buttonVariants} custom={1}
-            className="font-mono text-4xl md:text-6xl mb-12 text-latte-100 tracking-tighter"
+            className="font-mono text-3xl md:text-6xl mb-12 text-latte-100 tracking-tighter"
           >
             Start a Session
           </motion.h2>
@@ -210,7 +210,7 @@ function App() {
       
       <Hero />
       
-      <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)]">
+      <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
         <Gallery />
         <AboutSection />
         <ContactSection />

@@ -17,8 +17,8 @@ const Navbar: React.FC = () => {
     <nav className="fixed top-0 left-0 w-full z-50 px-6 py-4 flex justify-between items-center backdrop-blur-sm bg-espresso-950/80 border-b border-espresso-700">
       <div className="flex items-center gap-3 text-latte-100" data-hover>
         <Terminal className="w-5 h-5 text-accent-orange" />
-        <span className="font-mono text-sm tracking-tight">
-          <span className="text-latte-500">root@espresso:</span>
+        <span className="font-mono text-[10px] md:text-sm tracking-tight">
+          <span className="text-latte-500">root@aioverse:</span>
           <span className="text-accent-blue">~</span>
           <span className="text-latte-100">$ ./portfolio</span>
         </span>
