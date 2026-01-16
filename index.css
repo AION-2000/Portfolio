@@ -1,0 +1,63 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply m-0 overflow-x-hidden bg-espresso-900 text-latte-100 cursor-none;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #120C08; 
+}
+::-webkit-scrollbar-thumb {
+  background: #2E2018; 
+  border-radius: 0px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8C6854; 
+}
+
+/* Glitch Effect */
+.glitch-text {
+  transition: color 0.2s ease;
+}
+.glitch-text:hover {
+  text-shadow: 2px 0 #E67E22, -2px 0 #2196F3;
+  animation: glitch 0.3s cubic-bezier(.25, .46, .45, .94) both infinite !important;
+}
+
+@keyframes glitch {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+
+/* Waveform Animation */
+@keyframes text-waveform {
+  0%, 100% { opacity: 1; text-shadow: 0 0 0px rgba(235, 224, 214, 0); }
+  50% { opacity: 0.9; text-shadow: 0 0 12px rgba(230, 126, 34, 0.25); } 
+}
+.text-waveform {
+  animation: text-waveform 4s ease-in-out infinite;
+}
+
+/* Cursor Blink Animation */
+@keyframes cursor-blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+.cursor-blink {
+  animation: cursor-blink 1s step-end infinite;
+}

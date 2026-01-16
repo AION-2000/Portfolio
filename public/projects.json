@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "title": "Fruit_Classif_XAI",
+    "category": "AI / Deep Learning",
+    "image": "https://picsum.photos/seed/fruit/800/600",
+    "description": "Enhancing Fruit Classification with Deep Learning, Explainable AI (XAI), and Database Integration.",
+    "link": "https://github.com/AION-2000?tab=repositories",
+    "languages": [
+      "Python",
+      "TensorFlow",
+      "OpenCV"
+    ],
+    "stars": 0,
+    "createdAt": "2024-01-01",
+    "updatedAt": "2024-01-01"
+  },
+  {
+    "id": 2,
+    "title": "AI_Image_Gen",
+    "category": "Web / GenAI",
+    "image": "https://picsum.photos/seed/genai/800/800",
+    "description": "Full-stack AI Image Generator Web App using Flask & OpenAI API.",
+    "link": "https://github.com/AION-2000?tab=repositories",
+    "languages": [
+      "Python",
+      "Flask",
+      "JavaScript"
+    ],
+    "stars": 0,
+    "createdAt": "2024-01-01",
+    "updatedAt": "2024-01-01"
+  },
+  {
+    "id": 3,
+    "title": "Ecommerce_Auto",
+    "category": "Automation",
+    "image": "https://picsum.photos/seed/ecom/800/800",
+    "description": "Automated system for streamlining e-commerce operations and workflows.",
+    "link": "https://github.com/AION-2000?tab=repositories",
+    "languages": [
+      "Python",
+      "Automation"
+    ],
+    "stars": 0,
+    "createdAt": "2024-01-01",
+    "updatedAt": "2024-01-01"
+  },
+  {
+    "id": 4,
+    "title": "Plagiarism_Bot",
+    "category": "NLP / Detection",
+    "image": "https://picsum.photos/seed/nlp/700/500",
+    "description": "AI-powered plagiarism checker and detection system using NLP techniques.",
+    "link": "https://github.com/AION-2000?tab=repositories",
+    "languages": [
+      "Python",
+      "NLP",
+      "Scikit-learn"
+    ],
+    "stars": 0,
+    "createdAt": "2024-01-01",
+    "updatedAt": "2024-01-01"
+  }
+]
