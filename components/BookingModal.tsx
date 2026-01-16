@@ -34,11 +34,11 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
         }
 
         try {
-            const response = await fetch(SCRIPT_URL, {
+            await fetch(SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors', // Important for Google Apps Script
+                mode: 'no-cors', // Essential for Google Apps Script cross-origin
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'text/plain', // Avoids preflight OPTIONS request
                 },
                 body: JSON.stringify(formData),
             });
