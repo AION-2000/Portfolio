@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Gallery from './components/Gallery';
@@ -6,6 +6,7 @@ import CodeShowcase from './components/CodeShowcase';
 import ChatWidget from './components/ChatWidget';
 import CustomCursor from './components/CustomCursor';
 import Footer from './components/Footer';
+import BookingModal from './components/BookingModal';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import { Download, Linkedin, Facebook, Instagram, MessageCircle } from 'lucide-react';
 
@@ -96,7 +97,7 @@ const AboutSection = () => {
 };
 
 // Extracted Contact Section
-const ContactSection = () => {
+const ContactSection = ({ onOpenBooking }: { onOpenBooking: () => void }) => {
   const containerRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -127,7 +128,7 @@ const ContactSection = () => {
       />
 
       <motion.div
-        className="relative z-10 text-center max-w-4xl mx-auto"
+        className="relative z-10 text-center max-w-5xl mx-auto"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.3 }}
@@ -156,6 +157,17 @@ const ContactSection = () => {
           >
             sh ./email_me.sh
           </motion.a>
+
+          <motion.button
+            onClick={onOpenBooking}
+            variants={buttonVariants} custom={8}
+            whileHover={{ scale: 1.05, backgroundColor: "#2196F3", color: "#0A0503" }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center justify-center px-8 py-4 bg-accent-blue text-espresso-950 font-mono font-bold text-sm transition-colors duration-300 min-w-[260px]"
+            data-hover
+          >
+            exec ./book_consultation.sh
+          </motion.button>
 
           <motion.a
             href="Shihab_Shahriar_Aion_Resume.pdf"
@@ -233,6 +245,8 @@ const ContactSection = () => {
 };
 
 function App() {
+  const [isBookingOpen, setIsBookingOpen] = useState(false);
+
   return (
     <div className="bg-espresso-900 min-h-screen text-latte-100 selection:bg-accent-orange selection:text-espresso-950 relative overflow-x-hidden">
       <CustomCursor />
@@ -257,11 +271,12 @@ function App() {
         <Gallery />
         <CodeShowcase />
         <AboutSection />
-        <ContactSection />
+        <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />
         <Footer />
       </div>
 
       <ChatWidget />
+      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
 }
