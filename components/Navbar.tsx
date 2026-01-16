@@ -6,10 +6,7 @@ import { Magnetic } from './Magnetic';
 
 const navItems: NavItem[] = [
   { label: './projects', href: '#work' },
-<<<<<<< HEAD
   { label: './code', href: '#code' },
-=======
->>>>>>> 7bd1c3165c11479ddb6dfff1fb5623596d316116
   { label: './skills', href: '#about' },
   { label: './contact', href: '#contact' },
 ];
@@ -48,13 +45,8 @@ const Navbar: React.FC = () => {
           </li>
         ))}
         <li className="hidden md:flex items-center gap-2 text-[10px] text-latte-500 border border-espresso-700 px-2 py-1 rounded-sm bg-espresso-900 ml-4">
-<<<<<<< HEAD
           <Cpu size={12} className="animate-pulse text-green-500" />
           CPU: 12%
-=======
-            <Cpu size={12} className="animate-pulse text-green-500"/>
-            CPU: 12%
->>>>>>> 7bd1c3165c11479ddb6dfff1fb5623596d316116
         </li>
       </ul>
     </nav>
