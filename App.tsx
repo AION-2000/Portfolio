@@ -7,7 +7,7 @@ import ChatWidget from './components/ChatWidget';
 import CustomCursor from './components/CustomCursor';
 import Footer from './components/Footer';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
-import { Download, Linkedin } from 'lucide-react';
+import { Download, Linkedin, Facebook, Instagram, MessageCircle } from 'lucide-react';
 
 // Extracted About Section for Scroll Effects
 const AboutSection = () => {
@@ -182,6 +182,48 @@ const ContactSection = () => {
           >
             <Linkedin className="w-4 h-4 mr-2" />
             curl linkedin.com
+          </motion.a>
+
+          <motion.a
+            href="https://www.facebook.com/Shahriar.aion25/"
+            target="_blank"
+            rel="noopener noreferrer"
+            variants={buttonVariants} custom={5}
+            whileHover={{ scale: 1.05, borderColor: "#1877F2", color: "#1877F2" }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50"
+            data-hover
+          >
+            <Facebook className="w-4 h-4 mr-2" />
+            ping facebook.sh
+          </motion.a>
+
+          <motion.a
+            href="https://www.instagram.com/_encrypted404_/"
+            target="_blank"
+            rel="noopener noreferrer"
+            variants={buttonVariants} custom={6}
+            whileHover={{ scale: 1.05, borderColor: "#E4405F", color: "#E4405F" }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50"
+            data-hover
+          >
+            <Instagram className="w-4 h-4 mr-2" />
+            view instagram.profile
+          </motion.a>
+
+          <motion.a
+            href="https://wa.me/8801959040057"
+            target="_blank"
+            rel="noopener noreferrer"
+            variants={buttonVariants} custom={7}
+            whileHover={{ scale: 1.05, borderColor: "#25D366", color: "#25D366" }}
+            whileTap={{ scale: 0.95 }}
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50"
+            data-hover
+          >
+            <MessageCircle className="w-4 h-4 mr-2" />
+            ssh whatsapp.chat
           </motion.a>
         </div>
 
