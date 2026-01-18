@@ -7,6 +7,7 @@ import ChatWidget from './components/ChatWidget';
 import CustomCursor from './components/CustomCursor';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import { motion, useScroll, useTransform, Variants } from 'framer-motion';
 import { Download, Linkedin, Facebook, Instagram, MessageCircle } from 'lucide-react';
 
@@ -277,6 +278,7 @@ function App() {
 
       <ChatWidget />
       <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+      <SpeedInsights />
     </div>
   );
 }
