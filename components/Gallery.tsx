@@ -1,83 +1,28 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion';
 import { Project } from '../types';
-import { GitBranch, ArrowUpRight, Filter, ArrowDownUp, Star, Calendar, Hash } from 'lucide-react';
+import { GitBranch, ArrowUpRight, Filter, ArrowDownUp, Star, Calendar, Hash, RefreshCcw } from 'lucide-react';
 import { ScrollVelocity } from './ScrollVelocity';
-
-// Fallback projects for development
-const FALLBACK_PROJECTS: Project[] = [
-  {
-    id: 1,
-    title: 'Fruit_Classif_XAI',
-    category: 'AI / Deep Learning',
-    image: 'https://picsum.photos/seed/fruit/800/600',
-    description: 'Enhancing Fruit Classification with Deep Learning, Explainable AI (XAI), and Database Integration.',
-    link: 'https://github.com/AION-2000?tab=repositories',
-    languages: ['Python', 'TensorFlow', 'OpenCV'],
-    stars: 5,
-    updatedAt: '2024-01-01'
-  },
-  {
-    id: 2,
-    title: 'AI_Image_Gen',
-    category: 'Web / GenAI',
-    image: 'https://picsum.photos/seed/genai/800/800',
-    description: 'Full-stack AI Image Generator Web App using Flask & OpenAI API.',
-    link: 'https://github.com/AION-2000?tab=repositories',
-    languages: ['Python', 'Flask', 'JavaScript'],
-    stars: 3,
-    updatedAt: '2024-02-01'
-  },
-  {
-    id: 3,
-    title: 'Ecommerce_Auto',
-    category: 'Automation',
-    image: 'https://picsum.photos/seed/ecom/800/800',
-    description: 'Automated system for streamlining e-commerce operations and workflows.',
-    link: 'https://github.com/AION-2000?tab=repositories',
-    languages: ['Python', 'Automation'],
-    stars: 2,
-    updatedAt: '2024-03-01'
-  },
-  {
-    id: 4,
-    title: 'Plagiarism_Bot',
-    category: 'NLP / Detection',
-    image: 'https://picsum.photos/seed/nlp/700/500',
-    description: 'AI-powered plagiarism checker and detection system using NLP techniques.',
-    link: 'https://github.com/AION-2000?tab=repositories',
-    languages: ['Python', 'NLP', 'Scikit-learn'],
-    stars: 7,
-    updatedAt: '2024-04-01'
-  },
-];
+import { fetchGitHubProjects } from '../services/githubService';
 
 type SortOption = 'stars' | 'updated' | 'name';
 
-// Load projects from generated JSON or fallback
-const loadProjects = async (): Promise<Project[]> => {
-  try {
-    const response = await fetch('/projects.json');
-    if (response.ok) {
-      const data = await response.json();
-      console.log('✅ Loaded projects from GitHub data');
-      return data;
-    }
-  } catch (error) {
-    console.warn('⚠️ Could not load projects.json, using fallback');
-  }
-  return FALLBACK_PROJECTS;
-};
-
 const Gallery: React.FC = () => {
-  const [projects, setProjects] = useState<Project[]>(FALLBACK_PROJECTS);
+  const [projects, setProjects] = useState<Project[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedLanguage, setSelectedLanguage] = useState<string>('All');
   const [sortBy, setSortBy] = useState<SortOption>('updated');
   const [displayCount, setDisplayCount] = useState(6);
 
   // Load projects on mount
   useEffect(() => {
-    loadProjects().then(setProjects);
+    const load = async () => {
+      setIsLoading(true);
+      const data = await fetchGitHubProjects();
+      setProjects(data);
+      setIsLoading(false);
+    };
+    load();
   }, []);
 
   // Extract all unique languages
@@ -110,7 +55,6 @@ const Gallery: React.FC = () => {
   const displayedProjects = filteredProjects.slice(0, displayCount);
   const hasMore = displayCount < filteredProjects.length;
 
-  const pythonCount = projects.filter(p => p.languages?.includes('Python')).length;
 
   return (
     <section id="work" className="relative bg-espresso-900 w-full z-10 shadow-[0_-50px_100px_rgba(0,0,0,1)] border-t border-espresso-700">
@@ -127,8 +71,16 @@ const Gallery: React.FC = () => {
             </h2>
           </div>
           <div className="hidden md:block font-mono text-latte-500 text-xs text-right">
-            Total Repos: {projects.length}<br />
-            Python Projects: <span className="text-accent-orange">{pythonCount}</span>
+            {isLoading ? (
+              <div className="flex items-center gap-2 text-accent-orange">
+                <RefreshCcw className="w-3 h-3 animate-spin" /> Syncing with GitHub...
+              </div>
+            ) : (
+              <>
+                Total Repos: {projects.length}<br />
+                Python Projects: <span className="text-accent-orange">{projects.filter(p => p.languages?.includes('Python')).length}</span>
+              </>
+            )}
           </div>
         </div>
 

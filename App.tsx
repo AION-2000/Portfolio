@@ -7,7 +7,8 @@ import ChatWidget from './components/ChatWidget';
 import CustomCursor from './components/CustomCursor';
 import Footer from './components/Footer';
 import BookingModal from './components/BookingModal';
-import { motion, useScroll, useTransform, Variants } from 'framer-motion';
+import { Intro } from './components/Intro';
+import { motion, useScroll, useTransform, Variants, AnimatePresence } from 'framer-motion';
 import { Download, Linkedin, Facebook, Instagram, MessageCircle } from 'lucide-react';
 
 // Extracted About Section for Scroll Effects
@@ -248,6 +249,7 @@ const ContactSection = ({ onOpenBooking }: { onOpenBooking: () => void }) => {
 function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [showIntro, setShowIntro] = useState(true);
 
   return (
     <div className="bg-espresso-900 min-h-screen text-latte-100 selection:bg-accent-orange selection:text-espresso-950 relative overflow-x-hidden">
@@ -258,27 +260,37 @@ function App() {
         style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}>
       </div>
 
-      <Navbar />
+      <AnimatePresence mode="wait">
+        {showIntro ? (
+          <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8 }}>
+            <Intro onEnter={() => setShowIntro(false)} />
+          </motion.div>
+        ) : (
+          <motion.div key="content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+            <Navbar />
 
-      {/* 
-        Scroll Architecture:
-        Hero is Sticky at Top (z-0).
-        Content Wrapper is Relative (z-10) with background.
-        As user scrolls, Content slides UP over the Hero.
-      */}
+            {/* 
+              Scroll Architecture:
+              Hero is Sticky at Top (z-0).
+              Content Wrapper is Relative (z-10) with background.
+              As user scrolls, Content slides UP over the Hero.
+            */}
 
-      <Hero onOpenChat={() => setIsChatOpen(true)} />
+            <Hero onOpenChat={() => setIsChatOpen(true)} />
 
-      <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
-        <Gallery />
-        <CodeShowcase />
-        <AboutSection />
-        <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />
-        <Footer />
-      </div>
+            <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
+              <Gallery />
+              <CodeShowcase />
+              <AboutSection />
+              <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />
+              <Footer />
+            </div>
 
-      <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
-      <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+            <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+            <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
