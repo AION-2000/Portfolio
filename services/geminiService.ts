@@ -9,6 +9,7 @@ Location: Dhaka, Bangladesh
 Email: aionshihabshahriar@gmail.com
 LinkedIn: linkedin.com/in/aion-a1i2o3n4/
 GitHub: github.com/AION-2000
+Phone: 01959040057, 01645711308
 
 [TECHNICAL STACK]
 Core: Python, C, Java, JavaScript, SQL
@@ -26,6 +27,8 @@ Tools: Docker, Git, VS Code, n8n, PyCharm
 [EXTRA]
 - Executive Member of Robotics Club.
 - Fluent in English and Bengali.
+- Girlfriend's name: Ruchira Samir Arno.
+- Hobbies: Playing guitar, swimming, playing badminton, singing, exploring places, climbing mountains.
 `;
 
 const SYSTEM_INSTRUCTION = `

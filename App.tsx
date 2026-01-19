@@ -170,8 +170,9 @@ const ContactSection = ({ onOpenBooking }: { onOpenBooking: () => void }) => {
           </motion.button>
 
           <motion.a
-            href="Shihab_Shahriar_Aion_Resume.pdf"
-            download="Shihab_Shahriar_Aion_Resume.pdf"
+            href="https://drive.google.com/uc?export=download&id=1gqm81XcjnW4i5Ul7GfCvuve9yjZMkDtx"
+            target="_blank"
+            rel="noopener noreferrer"
             variants={buttonVariants} custom={3}
             whileHover={{ scale: 1.05, borderColor: "#E67E22", color: "#E67E22" }}
             whileTap={{ scale: 0.95 }}

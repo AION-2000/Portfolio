@@ -49,22 +49,41 @@ const Footer: React.FC = () => {
           <span className="text-latte-500">;</span>
         </motion.div>
 
-        <motion.p
+        <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 0.6 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="opacity-60"
+          className="opacity-60 space-y-2"
         >
-          Shihab Shahriar Aion •{' '}
-          <motion.span
-            className="text-accent-green inline-block"
-            animate={{ opacity: [0.6, 1, 0.6] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-          >
-            All Systems Operational
-          </motion.span>
-        </motion.p>
+          <div className="relative flex items-center justify-center w-full h-8 px-4">
+            {/* Left side labels - positioned relative to center */}
+            <div className="absolute right-[50%] mr-14 flex items-center gap-2 opacity-80 text-[10px] uppercase tracking-widest pointer-events-none whitespace-nowrap text-latte-300">
+              <span className="w-1 h-1 rounded-full bg-accent-green animate-pulse" />
+              <span>Visitors</span>
+            </div>
+
+            {/* The centered number - The absolute center point */}
+            <span className="text-accent-blue font-bold text-sm tabular-nums tracking-normal drop-shadow-[0_0_8px_rgba(33,150,243,0.3)]">1,024,842</span>
+
+            {/* Right side labels - positioned relative to center */}
+            <div className="absolute left-[50%] ml-14 hidden sm:flex items-center gap-2 opacity-80 text-[9px] uppercase tracking-widest pointer-events-none text-accent-green whitespace-nowrap">
+              <span>Stable_Connection</span>
+              <span className="w-1 h-1 rounded-full bg-accent-green/50" />
+            </div>
+          </div>
+
+          <p>
+            Shihab Shahriar Aion •{' '}
+            <motion.span
+              className="text-accent-green inline-block"
+              animate={{ opacity: [0.6, 1, 0.6] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            >
+              All Systems Operational
+            </motion.span>
+          </p>
+        </motion.div>
       </div>
     </footer>
   );
