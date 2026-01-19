@@ -4,7 +4,11 @@ import useSmoothScroll from '../hooks/useSmoothScroll';
 import { TypingText } from './TypingText';
 import { Magnetic } from './Magnetic';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onOpenChat: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onOpenChat }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollTo = useSmoothScroll();
 
@@ -152,16 +156,15 @@ impl System {
           className="mt-8 md:mt-12 flex items-center gap-6"
         >
           <Magnetic>
-            <motion.a
-              href="#work"
-              onClick={(e) => scrollTo(e, '#work')}
+            <motion.button
+              onClick={onOpenChat}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className="block group relative px-6 py-3 md:px-8 md:py-4 bg-transparent border border-latte-500/50 hover:border-accent-orange transition-colors cursor-none overflow-hidden"
               data-hover
             >
-              <span className="relative z-10 font-mono text-[10px] md:text-xs text-latte-100 group-hover:text-espresso-950 transition-colors font-bold tracking-widest">
-                $ cd ./projects
+              <span className="relative z-10 font-mono text-[10px] md:text-xs text-latte-100 group-hover:text-espresso-950 transition-colors font-bold tracking-widest uppercase">
+                Talk with Aion
               </span>
               <motion.div
                 className="absolute inset-0 bg-accent-orange z-0"
@@ -173,7 +176,7 @@ impl System {
               {/* Corner Accents */}
               <span className="absolute top-0 left-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
               <span className="absolute bottom-0 right-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
-            </motion.a>
+            </motion.button>
           </Magnetic>
 
           <div className="text-[10px] font-mono text-latte-500 flex flex-col">

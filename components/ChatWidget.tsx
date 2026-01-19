@@ -5,8 +5,12 @@ import { sendMessageToGemini } from '../services/geminiService';
 import { ChatMessage } from '../types';
 import { GenerateContentResponse } from '@google/genai';
 
-const ChatWidget: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface ChatWidgetProps {
+  isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, setIsOpen }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
     { id: '1', role: 'model', text: 'Espresso Shell v2.5 initialized. \nWaiting for input...' }
   ]);
@@ -40,30 +44,30 @@ const ChatWidget: React.FC = () => {
       setMessages(prev => [...prev, { id: botMessageId, role: 'model', text: '', isStreaming: true }]);
 
       const stream = await sendMessageToGemini(userMessage.text);
-      
+
       let fullText = '';
       for await (const chunk of stream) {
         const chunkText = (chunk as GenerateContentResponse).text;
         if (chunkText) {
-            fullText += chunkText;
-            setMessages(prev => prev.map(msg => 
-                msg.id === botMessageId ? { ...msg, text: fullText } : msg
-            ));
+          fullText += chunkText;
+          setMessages(prev => prev.map(msg =>
+            msg.id === botMessageId ? { ...msg, text: fullText } : msg
+          ));
         }
       }
 
-       setMessages(prev => prev.map(msg => 
-            msg.id === botMessageId ? { ...msg, isStreaming: false } : msg
-        ));
+      setMessages(prev => prev.map(msg =>
+        msg.id === botMessageId ? { ...msg, isStreaming: false } : msg
+      ));
 
     } catch (error: any) {
       console.error("Gemini Chat Error:", error);
       const errorMessage = error?.message || "Unknown error occurred";
-      
-      setMessages(prev => [...prev, { 
-        id: Date.now().toString(), 
-        role: 'model', 
-        text: `Error: ${errorMessage}\n\n[System Diagnostic]: Check VITE_GEMINI_API_KEY configuration.` 
+
+      setMessages(prev => [...prev, {
+        id: Date.now().toString(),
+        role: 'model',
+        text: `Error: ${errorMessage}\n\n[System Diagnostic]: Check VITE_GEMINI_API_KEY configuration.`
       }]);
     } finally {
       setIsLoading(false);
@@ -103,9 +107,9 @@ const ChatWidget: React.FC = () => {
                 <span className="font-bold tracking-wider">bash — 80x24</span>
               </div>
               <div className="flex gap-2 opacity-50">
-                <Minus size={10} className="hover:text-white cursor-pointer"/>
-                <Maximize2 size={10} className="hover:text-white cursor-pointer"/>
-                <X size={10} className="hover:text-white cursor-pointer" onClick={() => setIsOpen(false)}/>
+                <Minus size={10} className="hover:text-white cursor-pointer" />
+                <Maximize2 size={10} className="hover:text-white cursor-pointer" />
+                <X size={10} className="hover:text-white cursor-pointer" onClick={() => setIsOpen(false)} />
               </div>
             </div>
 
@@ -121,12 +125,12 @@ const ChatWidget: React.FC = () => {
                   ) : (
                     <div className="text-latte-400 pl-0">
                       {msg.text.split('\n').map((line, i) => (
-                         <div key={i} className="min-h-[1.2em]">
-                           {i===0 && <span className="text-accent-green mr-2">{'>'}</span>}
-                           {line}
-                         </div>
+                        <div key={i} className="min-h-[1.2em]">
+                          {i === 0 && <span className="text-accent-green mr-2">{'>'}</span>}
+                          {line}
+                        </div>
                       ))}
-                      {msg.isStreaming && <span className="inline-block w-2 h-4 bg-accent-green ml-1 animate-pulse align-text-bottom"/>}
+                      {msg.isStreaming && <span className="inline-block w-2 h-4 bg-accent-green ml-1 animate-pulse align-text-bottom" />}
                     </div>
                   )}
                 </div>

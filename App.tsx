@@ -247,6 +247,7 @@ const ContactSection = ({ onOpenBooking }: { onOpenBooking: () => void }) => {
 
 function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
     <div className="bg-espresso-900 min-h-screen text-latte-100 selection:bg-accent-orange selection:text-espresso-950 relative overflow-x-hidden">
@@ -266,7 +267,7 @@ function App() {
         As user scrolls, Content slides UP over the Hero.
       */}
 
-      <Hero />
+      <Hero onOpenChat={() => setIsChatOpen(true)} />
 
       <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
         <Gallery />
@@ -276,7 +277,7 @@ function App() {
         <Footer />
       </div>
 
-      <ChatWidget />
+      <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
       <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
     </div>
   );
