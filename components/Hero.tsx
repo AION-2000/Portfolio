@@ -1,14 +1,19 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import useSmoothScroll from '../hooks/useSmoothScroll';
 import { TypingText } from './TypingText';
 import { Magnetic } from './Magnetic';
+
+import { GridScan } from './GridScan';
 
 interface HeroProps {
   onOpenChat: () => void;
 }
 
 const Hero: React.FC<HeroProps> = ({ onOpenChat }) => {
+  const navigate = useNavigate();
+  console.log('Hero component rendering');
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollTo = useSmoothScroll();
 
@@ -31,12 +36,21 @@ const Hero: React.FC<HeroProps> = ({ onOpenChat }) => {
       style={{ opacity, scale, y, filter }}
       className="sticky top-0 h-screen w-full flex flex-col justify-center items-start overflow-hidden bg-espresso-950 px-4 md:px-24 z-0 perspective-1000"
     >
-      {/* Background Tech Grid - Animated */}
-      <motion.div
-        animate={{ backgroundPosition: ["0px 0px", "40px 40px"] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
-        className="absolute inset-0 bg-[size:40px_40px] bg-grid-pattern opacity-[0.03] pointer-events-none"
-      />
+      {/* Background Tech Grid - Animated GridScan */}
+      <div className="absolute inset-0 pointer-events-none opacity-40">
+        <GridScan
+          sensitivity={0.55}
+          lineThickness={1}
+          linesColor="#392e4e"
+          gridScale={0.1}
+          scanColor="#FF9FFC"
+          scanOpacity={0.4}
+          enablePost
+          bloomIntensity={0.6}
+          chromaticAberration={0.002}
+          noiseIntensity={0.01}
+        />
+      </div>
 
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-espresso-900 via-transparent to-transparent opacity-50" />
 
@@ -149,18 +163,13 @@ impl System {
           Designing clean code with the precision of a perfect espresso pull.
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 1.5 }}
-          className="mt-8 md:mt-12 flex items-center gap-6"
-        >
+        <div className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center gap-6">
           <Magnetic>
             <motion.button
               onClick={onOpenChat}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="block group relative px-6 py-3 md:px-8 md:py-4 bg-transparent border border-latte-500/50 hover:border-accent-orange transition-colors cursor-none overflow-hidden"
+              className="block group relative w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-transparent border border-latte-500/50 hover:border-accent-orange transition-colors cursor-none overflow-hidden"
               data-hover
             >
               <span className="relative z-10 font-mono text-[10px] md:text-xs text-latte-100 group-hover:text-espresso-950 transition-colors font-bold tracking-widest uppercase">
@@ -179,13 +188,37 @@ impl System {
             </motion.button>
           </Magnetic>
 
+          <Magnetic>
+            <motion.button
+              onClick={() => navigate('/services')}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="block group relative w-full sm:w-auto px-6 py-3 md:px-8 md:py-4 bg-transparent border border-latte-500/50 hover:border-accent-blue transition-colors cursor-none overflow-hidden"
+              data-hover
+            >
+              <span className="relative z-10 font-mono text-[10px] md:text-xs text-latte-100 group-hover:text-espresso-950 transition-colors font-bold tracking-widest uppercase">
+                Services
+              </span>
+              <motion.div
+                className="absolute inset-0 bg-accent-blue z-0"
+                initial={{ x: '-100%' }}
+                whileHover={{ x: '0%' }}
+                transition={{ type: 'tween', ease: 'circOut' }}
+              />
+
+              {/* Corner Accents */}
+              <span className="absolute top-0 left-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
+              <span className="absolute bottom-0 right-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
+            </motion.button>
+          </Magnetic>
+
           <div className="text-[10px] font-mono text-latte-500 flex flex-col">
             <motion.span animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }}>
               Lat: 34ms
             </motion.span>
             <span>Uptime: 99.9%</span>
           </div>
-        </motion.div>
+        </div>
       </div>
 
       {/* Scroll Indicator */}

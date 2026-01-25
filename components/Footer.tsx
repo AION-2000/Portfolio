@@ -1,8 +1,17 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Facebook, Instagram, MessageCircle } from 'lucide-react';
+import LogoLoop, { LogoItem } from './LogoLoop';
+import { SiGithub, SiLinkedin, SiFacebook, SiInstagram, SiWhatsapp } from 'react-icons/si';
 
 const Footer: React.FC = () => {
+  const socialLogos: LogoItem[] = [
+    { node: <SiGithub />, title: "GitHub", href: "https://github.com/AION-2000?tab=repositories" },
+    { node: <SiLinkedin />, title: "LinkedIn", href: "https://www.linkedin.com/in/aion-a1i2o3n4/" },
+    { node: <SiFacebook />, title: "Facebook", href: "https://www.facebook.com/Shahriar.aion25/" },
+    { node: <SiInstagram />, title: "Instagram", href: "https://www.instagram.com/_encrypted404_/" },
+    { node: <SiWhatsapp />, title: "WhatsApp", href: "https://wa.me/8801959040057" },
+  ];
+
   return (
     <footer className="relative py-16 bg-espresso-950 text-center border-t border-espresso-700 text-latte-500 font-mono text-xs overflow-hidden">
       {/* Subtle moving background mesh for depth */}
@@ -14,28 +23,20 @@ const Footer: React.FC = () => {
 
       <div className="relative z-10 flex flex-col items-center gap-6">
 
-        {/* Social Links */}
-        <div className="flex gap-6">
-          <a href="https://github.com/AION-2000?tab=repositories" target="_blank" rel="noopener noreferrer" className="hover:text-accent-orange transition-colors flex items-center gap-2" data-hover>
-            <Github size={16} />
-            <span>GitHub</span>
-          </a>
-          <a href="https://www.linkedin.com/in/aion-a1i2o3n4/" target="_blank" rel="noopener noreferrer" className="hover:text-accent-blue transition-colors flex items-center gap-2" data-hover>
-            <Linkedin size={16} />
-            <span>LinkedIn</span>
-          </a>
-          <a href="https://www.facebook.com/Shahriar.aion25/" target="_blank" rel="noopener noreferrer" className="hover:text-[#1877F2] transition-colors flex items-center gap-2" data-hover>
-            <Facebook size={16} />
-            <span>Facebook</span>
-          </a>
-          <a href="https://www.instagram.com/_encrypted404_/" target="_blank" rel="noopener noreferrer" className="hover:text-[#E4405F] transition-colors flex items-center gap-2" data-hover>
-            <Instagram size={16} />
-            <span>Instagram</span>
-          </a>
-          <a href="https://wa.me/8801959040057" target="_blank" rel="noopener noreferrer" className="hover:text-[#25D366] transition-colors flex items-center gap-2" data-hover>
-            <MessageCircle size={16} />
-            <span>WhatsApp</span>
-          </a>
+        {/* Social Logo Loop */}
+        <div className="w-full max-w-xl px-4">
+          <LogoLoop
+            logos={socialLogos}
+            speed={60}
+            direction="left"
+            logoHeight={24}
+            gap={48}
+            pauseOnHover
+            scaleOnHover
+            fadeOut
+            fadeOutColor="#060302" // Matching espresso-950 roughly
+            ariaLabel="Social media links"
+          />
         </div>
 
         <motion.div

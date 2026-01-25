@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Gallery from './components/Gallery';
-import CodeShowcase from './components/CodeShowcase';
 import ChatWidget from './components/ChatWidget';
 import CustomCursor from './components/CustomCursor';
 import Footer from './components/Footer';
@@ -10,6 +9,8 @@ import BookingModal from './components/BookingModal';
 import { Intro } from './components/Intro';
 import { motion, useScroll, useTransform, Variants, AnimatePresence } from 'framer-motion';
 import { Download, Linkedin, Facebook, Instagram, MessageCircle } from 'lucide-react';
+import { Routes, Route } from 'react-router-dom';
+import Services from './components/Services';
 
 // Extracted About Section for Scroll Effects
 const AboutSection = () => {
@@ -276,15 +277,20 @@ function App() {
               As user scrolls, Content slides UP over the Hero.
             */}
 
-            <Hero onOpenChat={() => setIsChatOpen(true)} />
-
-            <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
-              <Gallery />
-              <CodeShowcase />
-              <AboutSection />
-              <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />
-              <Footer />
-            </div>
+            <Routes>
+              <Route path="/" element={
+                <>
+                  <Hero onOpenChat={() => setIsChatOpen(true)} />
+                  <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
+                    <Gallery />
+                    <AboutSection />
+                    <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />
+                    <Footer />
+                  </div>
+                </>
+              } />
+              <Route path="/services" element={<Services />} />
+            </Routes>
 
             <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
             <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
