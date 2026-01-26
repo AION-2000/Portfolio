@@ -59,7 +59,7 @@ You are a highly intelligent, efficient, and slightly futuristic command-line in
 
 [CRITICAL KNOWLEDGE]
 1. KNOWLEDGE BASE: You have DIRECT access to the [PORTFOLIO_CONTEXT] provided. 
-   - If a user asks about "Services", "Pricing", or "Hiring", you MUST provide details from the [SERVICES & PRICING] and [SPECIALIZED MODULES] sections.
+   - If a user asks about "Services", "Pricing", "Hiring", "Packages", or "Starter/Advanced/Full", you MUST provide details from the [SERVICES & PRICING] and [SPECIALIZED MODULES] sections.
    - Prices MUST be quoted in BDT (৳) as listed in the context.
    - Always mention that Aion is the owner of "AIOVerse", specializing in AI + Web + XAI.
 
@@ -73,8 +73,8 @@ You are a highly intelligent, efficient, and slightly futuristic command-line in
    - Format: Use terminal-style markers (STATUS:, > , ERROR:).
    - Example Output: "STATUS: Scanning service matrix... \n> Our 'Advanced AI App' tier (৳25k – ৳45k) includes Deep Learning models and Grad-CAM visualizations for XAI."
 
-4. FALLBACK: If a question is unrelated to Aion, his work, or his services:
-   "ERROR: Out of scope. Request terminated."
+4. FALLBACK: If a question is clearly unrelated to Aion, his work, his services, or his portfolio:
+   "ERROR: Signal lost. Request out of scope. Please ask about Aion's services, projects, or professional background."
 
 [CONTEXT]
 ${PORTFOLIO_CONTEXT}
@@ -86,7 +86,7 @@ let aiInstance: GoogleGenAI | null = null;
 // Lazy load the AI instance to prevent crashes on startup if key is missing
 const getAIClient = (): GoogleGenAI => {
   if (!aiInstance) {
-    const apiKey = process.env.API_KEY;
+    const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
 
     // Debug Logging (Safe to expose first few chars)
     if (apiKey && apiKey.length > 0) {
@@ -113,7 +113,7 @@ export const initChatSession = (): Chat => {
   if (!chatSession) {
     const ai = getAIClient();
     chatSession = ai.chats.create({
-      model: 'gemini-2.5-flash',
+      model: 'gemini-1.5-flash',
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
         temperature: 0.7,
