@@ -104,7 +104,7 @@ const TrustNode: React.FC = () => {
                     <Terminal size={14} className="text-accent-blue" />
                     <span className="font-mono text-[10px] text-latte-400 uppercase tracking-widest">FEEDBACK_LOGS_PRO_V.5.0</span>
                 </div>
-                <TestimonialSlider reviews={reviews} className="bg-transparent" />
+                <TestimonialSlider reviews={reviews} className="bg-transparent pt-12 md:pt-16" />
             </div>
         </section>
     );
