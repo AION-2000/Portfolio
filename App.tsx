@@ -13,6 +13,7 @@ import { Routes, Route } from 'react-router-dom';
 import Services from './components/Services';
 import Hyperspeed from './components/ui/Hyperspeed';
 import { hyperspeedPresets } from './components/ui/hyperspeedPresets';
+import { RippleEffect } from './components/ui/Ripple';
 
 // Extracted About Section for Scroll Effects
 const AboutSection = () => {
@@ -103,6 +104,14 @@ const AboutSection = () => {
 // Extracted Contact Section
 const ContactSection = ({ onOpenBooking }: { onOpenBooking: () => void }) => {
   const containerRef = useRef<HTMLElement>(null);
+  const emailBtnRef = useRef<HTMLAnchorElement>(null);
+  const bookBtnRef = useRef<HTMLButtonElement>(null);
+  const resumeBtnRef = useRef<HTMLAnchorElement>(null);
+  const linkedInBtnRef = useRef<HTMLAnchorElement>(null);
+  const faceBookBtnRef = useRef<HTMLAnchorElement>(null);
+  const instaBtnRef = useRef<HTMLAnchorElement>(null);
+  const whatsAppBtnRef = useRef<HTMLAnchorElement>(null);
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"]
@@ -152,95 +161,109 @@ const ContactSection = ({ onOpenBooking }: { onOpenBooking: () => void }) => {
 
         <div className="flex flex-col md:flex-row items-center justify-center gap-6 flex-wrap">
           <motion.a
+            ref={emailBtnRef}
             href="mailto:aionshihabshahriar@gmail.com"
             variants={buttonVariants} custom={2}
             whileHover={{ scale: 1.05, backgroundColor: "#E67E22", color: "#0A0503" }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center px-8 py-4 bg-latte-100 text-espresso-950 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px]"
+            className="inline-flex items-center justify-center px-8 py-4 bg-latte-100 text-espresso-950 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] relative overflow-hidden"
             data-hover
           >
             sh ./email_me.sh
+            <RippleEffect parentRef={emailBtnRef} color="rgba(0,0,0,0.1)" />
           </motion.a>
 
           <motion.button
+            ref={bookBtnRef}
             onClick={onOpenBooking}
             variants={buttonVariants} custom={8}
             whileHover={{ scale: 1.05, backgroundColor: "#2196F3", color: "#0A0503" }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center px-8 py-4 bg-accent-blue text-espresso-950 font-mono font-bold text-sm transition-colors duration-300 min-w-[260px]"
+            className="inline-flex items-center justify-center px-8 py-4 bg-accent-blue text-espresso-950 font-mono font-bold text-sm transition-colors duration-300 min-w-[260px] relative overflow-hidden"
             data-hover
           >
             exec ./book_consultation.sh
+            <RippleEffect parentRef={bookBtnRef} color="rgba(0,0,0,0.1)" />
           </motion.button>
 
           <motion.a
+            ref={resumeBtnRef}
             href="https://drive.google.com/uc?export=download&id=1gqm81XcjnW4i5Ul7GfCvuve9yjZMkDtx"
             target="_blank"
             rel="noopener noreferrer"
             variants={buttonVariants} custom={3}
             whileHover={{ scale: 1.05, borderColor: "#E67E22", color: "#E67E22" }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50 group"
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50 group relative overflow-hidden"
             data-hover
           >
             <Download className="w-4 h-4 mr-2 group-hover:animate-bounce" />
             wget ./resume.pdf
+            <RippleEffect parentRef={resumeBtnRef} />
           </motion.a>
 
           <motion.a
+            ref={linkedInBtnRef}
             href="https://www.linkedin.com/in/aion-a1i2o3n4/"
             target="_blank"
             rel="noopener noreferrer"
             variants={buttonVariants} custom={4}
             whileHover={{ scale: 1.05, borderColor: "#2196F3", color: "#2196F3" }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50"
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50 relative overflow-hidden"
             data-hover
           >
             <Linkedin className="w-4 h-4 mr-2" />
             curl linkedin.com
+            <RippleEffect parentRef={linkedInBtnRef} />
           </motion.a>
 
           <motion.a
+            ref={faceBookBtnRef}
             href="https://www.facebook.com/Shahriar.aion25/"
             target="_blank"
             rel="noopener noreferrer"
             variants={buttonVariants} custom={5}
             whileHover={{ scale: 1.05, borderColor: "#1877F2", color: "#1877F2" }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50"
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50 relative overflow-hidden"
             data-hover
           >
             <Facebook className="w-4 h-4 mr-2" />
             ping facebook.sh
+            <RippleEffect parentRef={faceBookBtnRef} />
           </motion.a>
 
           <motion.a
+            ref={instaBtnRef}
             href="https://www.instagram.com/_encrypted404_/"
             target="_blank"
             rel="noopener noreferrer"
             variants={buttonVariants} custom={6}
             whileHover={{ scale: 1.05, borderColor: "#E4405F", color: "#E4405F" }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50"
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50 relative overflow-hidden"
             data-hover
           >
             <Instagram className="w-4 h-4 mr-2" />
             view instagram.profile
+            <RippleEffect parentRef={instaBtnRef} />
           </motion.a>
 
           <motion.a
+            ref={whatsAppBtnRef}
             href="https://wa.me/8801959040057"
             target="_blank"
             rel="noopener noreferrer"
             variants={buttonVariants} custom={7}
             whileHover={{ scale: 1.05, borderColor: "#25D366", color: "#25D366" }}
             whileTap={{ scale: 0.95 }}
-            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50"
+            className="inline-flex items-center justify-center px-8 py-4 bg-transparent border border-latte-500 text-latte-500 font-mono font-bold text-sm transition-colors duration-300 min-w-[200px] hover:bg-espresso-900/50 relative overflow-hidden"
             data-hover
           >
             <MessageCircle className="w-4 h-4 mr-2" />
             ssh whatsapp.chat
+            <RippleEffect parentRef={whatsAppBtnRef} />
           </motion.a>
         </div>
 

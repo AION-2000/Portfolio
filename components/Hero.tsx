@@ -5,6 +5,7 @@ import useSmoothScroll from '../hooks/useSmoothScroll';
 import { TypingText } from './TypingText';
 import { Magnetic } from './Magnetic';
 
+import { RippleEffect } from './ui/Ripple';
 import { GridScan } from './GridScan';
 
 interface HeroProps {
@@ -15,6 +16,8 @@ const Hero: React.FC<HeroProps> = ({ onOpenChat }) => {
   const navigate = useNavigate();
   console.log('Hero component rendering');
   const containerRef = useRef<HTMLDivElement>(null);
+  const talkButtonRef = useRef<HTMLButtonElement>(null);
+  const servicesButtonRef = useRef<HTMLButtonElement>(null);
   const scrollTo = useSmoothScroll();
 
   // Track scroll for parallax effects
@@ -173,6 +176,7 @@ impl System {
         <div className="mt-8 md:mt-12 flex flex-col sm:flex-row items-center gap-6">
           <Magnetic>
             <motion.button
+              ref={talkButtonRef}
               onClick={onOpenChat}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -192,11 +196,14 @@ impl System {
               {/* Corner Accents */}
               <span className="absolute top-0 left-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
               <span className="absolute bottom-0 right-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
+
+              <RippleEffect parentRef={talkButtonRef} />
             </motion.button>
           </Magnetic>
 
           <Magnetic>
             <motion.button
+              ref={servicesButtonRef}
               onClick={() => navigate('/services')}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -216,6 +223,8 @@ impl System {
               {/* Corner Accents */}
               <span className="absolute top-0 left-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
               <span className="absolute bottom-0 right-0 w-1 h-1 bg-latte-500 group-hover:bg-espresso-950 transition-colors z-20"></span>
+
+              <RippleEffect parentRef={servicesButtonRef} color="rgba(33, 150, 243, 0.3)" />
             </motion.button>
           </Magnetic>
 

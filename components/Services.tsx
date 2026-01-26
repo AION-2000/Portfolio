@@ -1,11 +1,12 @@
 "use client";
 
-import React from "react";
+import React, { useRef } from "react";
 import ElectricBorder from "./ui/ElectricBorder";
 import { Sparkles, Zap, Shield, Rocket, ArrowLeft, Check, Terminal, Brain, Eye, MessageSquare, Globe, UserCheck, Star, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { GridScan } from "./GridScan";
+import { RippleEffect } from "./ui/Ripple";
 
 const serviceTiers = [
     {
@@ -107,6 +108,97 @@ const specializedServices = [
     }
 ];
 
+const ServiceTierCard = ({ tier, idx, onInitiate }: { tier: typeof serviceTiers[0], idx: number, onInitiate: (n: string) => void }) => {
+    const btnRef = useRef<HTMLButtonElement>(null);
+    return (
+        <motion.div initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 + 0.3 }} className="relative h-full">
+            {tier.pill && (
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 bg-accent-orange text-espresso-950 px-4 py-1 rounded-full font-mono font-bold text-[10px] uppercase tracking-widest shadow-lg">
+                    {tier.pill}
+                </div>
+            )}
+            <ElectricBorder color={tier.color} speed={1.2} chaos={0.1} borderRadius={12} className="h-full">
+                <div className="p-8 md:p-10 bg-espresso-900/40 backdrop-blur-xl rounded-xl border border-espresso-700/50 h-full flex flex-col group hover:bg-espresso-900/60 transition-colors duration-500">
+                    <div className="flex items-center justify-between mb-8">
+                        <div className="p-3 bg-espresso-950/50 rounded-lg border border-espresso-700">{tier.icon}</div>
+                        <div className="text-right flex flex-col items-end">
+                            <div className="flex items-center gap-1 mb-1">
+                                <Clock size={10} className="text-accent-green" />
+                                <span className="font-mono text-[8px] text-latte-500 uppercase tracking-widest leading-none">Delivery</span>
+                            </div>
+                            <span className="font-mono text-xs text-accent-green font-bold">{tier.delivery}</span>
+                        </div>
+                    </div>
+                    <h3 className="text-xl md:text-2xl font-mono font-bold mb-1 group-hover:text-latte-100 transition-colors uppercase leading-tight">{tier.title}</h3>
+                    <div className="mb-6">
+                        <span className="text-2xl md:text-3xl font-mono font-bold text-accent-orange">{tier.price}</span>
+                    </div>
+                    <p className="text-latte-400 font-mono text-[10px] md:text-xs mb-8 leading-relaxed border-l-2 border-espresso-700 pl-4 py-1">
+                        {tier.description}
+                    </p>
+                    <div className="mb-10 flex-grow">
+                        <div className="text-[9px] font-mono text-latte-500 uppercase tracking-widest mb-4 opacity-70">Core_Scope:</div>
+                        <ul className="space-y-4 font-mono text-xs text-latte-300">
+                            {tier.features.map(f => (
+                                <li key={f} className="flex items-start gap-3">
+                                    <Check className="size-3 mt-1 text-accent-green flex-shrink-0" />
+                                    <span className="leading-snug">{f}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                    <div className="mt-auto">
+                        <div className="mb-4 flex items-center gap-2 p-2 bg-espresso-950/30 rounded-sm border border-espresso-800/50">
+                            <Sparkles size={10} className="text-accent-blue flex-shrink-0" />
+                            <span className="text-[9px] font-mono text-latte-500 leading-tight italic">{tier.note}</span>
+                        </div>
+                        <motion.button
+                            ref={btnRef}
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            onClick={() => onInitiate(tier.title)}
+                            className="w-full relative py-4 bg-transparent border border-latte-100/20 text-latte-100 font-mono font-bold text-xs hover:bg-latte-100 hover:text-espresso-950 transition-all duration-300 overflow-hidden"
+                        >
+                            <span className="relative z-10 flex items-center justify-center gap-2">
+                                <Terminal size={12} />
+                                INITIATE_SESSION()
+                            </span>
+                            <RippleEffect parentRef={btnRef} />
+                        </motion.button>
+                    </div>
+                </div>
+            </ElectricBorder>
+        </motion.div>
+    );
+};
+
+const SpecializedServiceNode = ({ special, idx, onInitiate }: { special: typeof specializedServices[0], idx: number, onInitiate: (n: string) => void }) => {
+    const nodeRef = useRef<HTMLButtonElement>(null);
+    return (
+        <motion.div initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="p-6 bg-espresso-900/30 border border-espresso-700/50 rounded-sm hover:border-accent-blue/50 transition-colors group relative flex flex-col">
+            <div className="p-2 bg-espresso-950/50 rounded-sm w-fit mb-4 group-hover:scale-110 transition-transform">{special.icon}</div>
+            <h4 className="font-mono font-bold text-sm mb-1 uppercase text-latte-200">{special.title}</h4>
+            <div className="text-accent-orange font-mono text-sm font-bold mb-4">{special.price}</div>
+            <ul className="space-y-2 mb-6 flex-grow">
+                {special.items.map(item => (
+                    <li key={item} className="text-[10px] font-mono text-latte-500 flex items-start gap-2">
+                        <span className="w-1 h-1 bg-accent-blue rounded-full mt-1.5 flex-shrink-0" />
+                        <span className="leading-snug">{item}</span>
+                    </li>
+                ))}
+            </ul>
+            <button
+                ref={nodeRef}
+                onClick={() => onInitiate(special.title)}
+                className="w-full relative py-2 bg-espresso-800 border border-espresso-700 font-mono text-[9px] text-latte-400 hover:bg-accent-blue hover:text-espresso-950 transition-all uppercase tracking-widest overflow-hidden"
+            >
+                <span className="relative z-10">Request_Node</span>
+                <RippleEffect parentRef={nodeRef} color="rgba(33, 150, 243, 0.3)" />
+            </button>
+        </motion.div>
+    );
+};
+
 interface ServicesProps {
     onInitiate: (serviceName: string) => void;
 }
@@ -151,62 +243,7 @@ export default function Services({ onInitiate }: ServicesProps) {
                 {/* Main Tiers */}
                 <div className="flex flex-col md:grid md:grid-cols-3 gap-8 md:gap-10 mb-32">
                     {serviceTiers.map((tier, idx) => (
-                        <motion.div key={tier.title} initial={{ opacity: 0, y: 40 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: idx * 0.1 + 0.3 }} className="relative h-full">
-                            {tier.pill && (
-                                <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-20 bg-accent-orange text-espresso-950 px-4 py-1 rounded-full font-mono font-bold text-[10px] uppercase tracking-widest shadow-lg">
-                                    {tier.pill}
-                                </div>
-                            )}
-                            <ElectricBorder color={tier.color} speed={1.2} chaos={0.1} borderRadius={12} className="h-full">
-                                <div className="p-8 md:p-10 bg-espresso-900/40 backdrop-blur-xl rounded-xl border border-espresso-700/50 h-full flex flex-col group hover:bg-espresso-900/60 transition-colors duration-500">
-                                    <div className="flex items-center justify-between mb-8">
-                                        <div className="p-3 bg-espresso-950/50 rounded-lg border border-espresso-700">{tier.icon}</div>
-                                        <div className="text-right flex flex-col items-end">
-                                            <div className="flex items-center gap-1 mb-1">
-                                                <Clock size={10} className="text-accent-green" />
-                                                <span className="font-mono text-[8px] text-latte-500 uppercase tracking-widest leading-none">Delivery</span>
-                                            </div>
-                                            <span className="font-mono text-xs text-accent-green font-bold">{tier.delivery}</span>
-                                        </div>
-                                    </div>
-                                    <h3 className="text-xl md:text-2xl font-mono font-bold mb-1 group-hover:text-latte-100 transition-colors uppercase leading-tight">{tier.title}</h3>
-                                    <div className="mb-6">
-                                        <span className="text-2xl md:text-3xl font-mono font-bold text-accent-orange">{tier.price}</span>
-                                    </div>
-                                    <p className="text-latte-400 font-mono text-[10px] md:text-xs mb-8 leading-relaxed border-l-2 border-espresso-700 pl-4 py-1">
-                                        {tier.description}
-                                    </p>
-                                    <div className="mb-10 flex-grow">
-                                        <div className="text-[9px] font-mono text-latte-500 uppercase tracking-widest mb-4 opacity-70">Core_Scope:</div>
-                                        <ul className="space-y-4 font-mono text-xs text-latte-300">
-                                            {tier.features.map(f => (
-                                                <li key={f} className="flex items-start gap-3">
-                                                    <Check className="size-3 mt-1 text-accent-green flex-shrink-0" />
-                                                    <span className="leading-snug">{f}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </div>
-                                    <div className="mt-auto">
-                                        <div className="mb-4 flex items-center gap-2 p-2 bg-espresso-950/30 rounded-sm border border-espresso-800/50">
-                                            <Sparkles size={10} className="text-accent-blue flex-shrink-0" />
-                                            <span className="text-[9px] font-mono text-latte-500 leading-tight italic">{tier.note}</span>
-                                        </div>
-                                        <motion.button
-                                            whileHover={{ scale: 1.02 }}
-                                            whileTap={{ scale: 0.98 }}
-                                            onClick={() => onInitiate(tier.title)}
-                                            className="w-full relative py-4 bg-transparent border border-latte-100/20 text-latte-100 font-mono font-bold text-xs hover:bg-latte-100 hover:text-espresso-950 transition-all duration-300"
-                                        >
-                                            <span className="relative z-10 flex items-center justify-center gap-2">
-                                                <Terminal size={12} />
-                                                INITIATE_SESSION()
-                                            </span>
-                                        </motion.button>
-                                    </div>
-                                </div>
-                            </ElectricBorder>
-                        </motion.div>
+                        <ServiceTierCard key={tier.title} tier={tier} idx={idx} onInitiate={onInitiate} />
                     ))}
                 </div>
 
@@ -220,25 +257,7 @@ export default function Services({ onInitiate }: ServicesProps) {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {specializedServices.map((special, idx) => (
-                            <motion.div key={special.title} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="p-6 bg-espresso-900/30 border border-espresso-700/50 rounded-sm hover:border-accent-blue/50 transition-colors group relative flex flex-col">
-                                <div className="p-2 bg-espresso-950/50 rounded-sm w-fit mb-4 group-hover:scale-110 transition-transform">{special.icon}</div>
-                                <h4 className="font-mono font-bold text-sm mb-1 uppercase text-latte-200">{special.title}</h4>
-                                <div className="text-accent-orange font-mono text-sm font-bold mb-4">{special.price}</div>
-                                <ul className="space-y-2 mb-6 flex-grow">
-                                    {special.items.map(item => (
-                                        <li key={item} className="text-[10px] font-mono text-latte-500 flex items-start gap-2">
-                                            <span className="w-1 h-1 bg-accent-blue rounded-full mt-1.5 flex-shrink-0" />
-                                            <span className="leading-snug">{item}</span>
-                                        </li>
-                                    ))}
-                                </ul>
-                                <button
-                                    onClick={() => onInitiate(special.title)}
-                                    className="w-full py-2 bg-espresso-800 border border-espresso-700 font-mono text-[9px] text-latte-400 hover:bg-accent-blue hover:text-espresso-950 transition-all uppercase tracking-widest"
-                                >
-                                    Request_Node
-                                </button>
-                            </motion.div>
+                            <SpecializedServiceNode key={special.title} special={special} idx={idx} onInitiate={onInitiate} />
                         ))}
                     </div>
                 </div>

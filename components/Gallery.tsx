@@ -4,6 +4,7 @@ import { Project } from '../types';
 import { GitBranch, ArrowUpRight, Filter, ArrowDownUp, Star, Calendar, Hash, RefreshCcw } from 'lucide-react';
 import { ScrollVelocity } from './ScrollVelocity';
 import { fetchGitHubProjects } from '../services/githubService';
+import { RippleEffect } from './ui/Ripple';
 
 type SortOption = 'stars' | 'updated' | 'name';
 
@@ -271,6 +272,7 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
       transition={{ duration: 0.8, delay: index * 0.1, ease: [0.25, 1, 0.5, 1] }}
       data-hover
     >
+      <RippleEffect parentRef={cardRef} />
       {/* Window Header */}
       <div className="bg-espresso-950 px-3 py-2 flex items-center justify-between border-b border-espresso-700 z-20 relative translate-z-10">
         <div className="flex gap-2">
