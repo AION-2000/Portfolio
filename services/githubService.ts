@@ -5,6 +5,7 @@ import { Project } from '../types';
 const GITHUB_USERNAME = 'AION-2000';
 // Note: In client-side code, we must use VITE_ prefix. 
 // If VITE_GITHUB_TOKEN is not set, we'll try to fetch without auth (lower rate limit)
+// @ts-ignore - import.meta.env is available in Vite but tsc might complain
 const GITHUB_TOKEN = import.meta.env.VITE_GITHUB_TOKEN;
 
 // Fallback data in case GitHub API fails or rate limit exceeded

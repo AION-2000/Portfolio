@@ -945,12 +945,15 @@ class App {
         }
         this.container = container;
 
+        const width = container.offsetWidth || window.innerWidth;
+        const height = container.offsetHeight || window.innerHeight;
+
         this.renderer = new THREE.WebGLRenderer({
             antialias: false,
             alpha: true
         });
-        this.renderer.setSize(container.offsetWidth, container.offsetHeight, false);
-        this.renderer.setPixelRatio(window.devicePixelRatio);
+        this.renderer.setSize(width, height, false);
+        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
         this.composer = new EffectComposer(this.renderer);
         container.appendChild(this.renderer.domElement);
@@ -1007,8 +1010,9 @@ class App {
         this.onTouchStart = this.onTouchStart.bind(this);
         this.onTouchEnd = this.onTouchEnd.bind(this);
         this.onContextMenu = this.onContextMenu.bind(this);
+        this.onWindowResize = this.onWindowResize.bind(this);
 
-        window.addEventListener('resize', this.onWindowResize.bind(this));
+        window.addEventListener('resize', this.onWindowResize);
     }
 
     onWindowResize() {
@@ -1032,45 +1036,65 @@ class App {
             })
         );
 
-        const smaaPass = new EffectPass(
-            this.camera,
-            new SMAAEffect({
-                preset: SMAAPreset.MEDIUM
-            })
-        );
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
         this.renderPass.renderToScreen = false;
-        this.bloomPass.renderToScreen = false;
-        smaaPass.renderToScreen = true;
 
         this.composer.addPass(this.renderPass);
         this.composer.addPass(this.bloomPass);
-        this.composer.addPass(smaaPass);
+
+        if (!isMobile) {
+            try {
+                const smaaPass = new EffectPass(
+                    this.camera,
+                    new SMAAEffect({
+                        preset: SMAAPreset.MEDIUM
+                    })
+                );
+                smaaPass.renderToScreen = true;
+                this.composer.addPass(smaaPass);
+            } catch (e) {
+                console.error("SMAA failed, falling back to bloom", e);
+                this.bloomPass.renderToScreen = true;
+            }
+        } else {
+            this.bloomPass.renderToScreen = true;
+        }
     }
 
     loadAssets(): Promise<void> {
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        if (isMobile) return Promise.resolve();
+
         const assets = this.assets;
         return new Promise(resolve => {
-            const manager = new THREE.LoadingManager(resolve);
+            const manager = new THREE.LoadingManager(() => resolve());
+            manager.onError = () => resolve(); // Don't block on error
 
             const searchImage = new Image();
             const areaImage = new Image();
             assets.smaa = {};
 
-            searchImage.addEventListener('load', function () {
-                assets.smaa.search = this;
+            searchImage.onload = () => {
+                assets.smaa.search = searchImage;
                 manager.itemEnd('smaa-search');
-            });
+            };
+            searchImage.onerror = () => manager.itemEnd('smaa-search');
 
-            areaImage.addEventListener('load', function () {
-                assets.smaa.area = this;
+            areaImage.onload = () => {
+                assets.smaa.area = areaImage;
                 manager.itemEnd('smaa-area');
-            });
+            };
+            areaImage.onerror = () => manager.itemEnd('smaa-area');
 
             manager.itemStart('smaa-search');
             manager.itemStart('smaa-area');
 
             searchImage.src = SMAAEffect.searchImageDataURL;
             areaImage.src = SMAAEffect.areaImageDataURL;
+
+            // Safety timeout
+            setTimeout(() => resolve(), 2000);
         });
     }
 
@@ -1185,7 +1209,7 @@ class App {
             this.scene.clear();
         }
 
-        window.removeEventListener('resize', this.onWindowResize.bind(this));
+        window.removeEventListener('resize', this.onWindowResize);
         if (this.container) {
             this.container.removeEventListener('mousedown', this.onMouseDown);
             this.container.removeEventListener('mouseup', this.onMouseUp);
@@ -1217,42 +1241,55 @@ class App {
 }
 
 const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
-    const mergedOptions: HyperspeedOptions = {
-        ...defaultOptions,
-        ...effectOptions
-    };
     const hyperspeed = useRef<HTMLDivElement>(null);
     const appRef = useRef<App | null>(null);
 
     useEffect(() => {
-        if (appRef.current) {
-            appRef.current.dispose();
-            const container = document.getElementById('lights');
-            if (container) {
-                while (container.firstChild) {
-                    container.removeChild(container.firstChild);
-                }
-            }
-        }
-
         const container = hyperspeed.current;
         if (!container) return;
+
+        // Clean up any existing children to prevent double-canvas in StrictMode
+        while (container.firstChild) {
+            container.removeChild(container.firstChild);
+        }
+
+        const mergedOptions: HyperspeedOptions = {
+            ...defaultOptions,
+            ...effectOptions
+        };
 
         const options = { ...mergedOptions };
         if (typeof options.distortion === 'string') {
             options.distortion = distortions[options.distortion];
         }
 
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
         const myApp = new App(container, options);
         appRef.current = myApp;
-        myApp.loadAssets().then(myApp.init);
+
+        // Start init immediately but load assets in background
+        // SMAA might look slightly off for a few frames if assets aren't ready, 
+        // but the scene will be visible.
+        myApp.loadAssets().then(() => {
+            if (!myApp.disposed && !isMobile) {
+                // We could re-init passes if needed, but usually not necessary
+            }
+        });
+
+        myApp.init();
 
         return () => {
             if (appRef.current) {
                 appRef.current.dispose();
+                appRef.current = null;
+            }
+            if (container) {
+                while (container.firstChild) {
+                    container.removeChild(container.firstChild);
+                }
             }
         };
-    }, [mergedOptions]);
+    }, [effectOptions]);
 
     return <div id="lights" className="w-full h-full absolute inset-0" ref={hyperspeed}></div>;
 };
