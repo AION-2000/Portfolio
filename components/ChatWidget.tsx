@@ -12,7 +12,7 @@ interface ChatWidgetProps {
 
 const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, setIsOpen }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: '1', role: 'model', text: 'AIOVerse Shell v0.2 initialized. \nWaiting for input...' }
+    { id: '1', role: 'model', text: 'AIOVerse Shell v0.3 initialized. \nService Matrix loaded. Type "services" to see my available packages. \nWaiting for input...' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
