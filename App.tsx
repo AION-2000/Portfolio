@@ -14,6 +14,7 @@ import Services from './components/Services';
 import Hyperspeed from './components/ui/Hyperspeed';
 import { hyperspeedPresets } from './components/ui/hyperspeedPresets';
 import { RippleEffect } from './components/ui/Ripple';
+import TrustNode from './components/TrustNode';
 
 // Extracted About Section for Scroll Effects
 const AboutSection = () => {
@@ -366,6 +367,7 @@ function App() {
                   <Hero onOpenChat={() => setIsChatOpen(true)} />
                   <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
                     <Gallery />
+                    <TrustNode />
                     <AboutSection />
                     <ContactSection onOpenBooking={() => handleOpenBooking()} />
                     <Footer />
