@@ -2,8 +2,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Terminal, Users, Database, Code, ShieldCheck } from 'lucide-react';
+import { Terminal, Users, Database, Code, ShieldCheck, PlusCircle } from 'lucide-react';
 import { TestimonialSlider, type Review } from './ui/TestimonialSlider';
+import FeedbackModal from './FeedbackModal';
 
 const stats = [
     { label: "AI Models Deployed", value: 12, suffix: "+", icon: <Database size={16} /> },
@@ -12,7 +13,7 @@ const stats = [
     { label: "Uptime Protocol", value: 99.9, suffix: "%", icon: <ShieldCheck size={16} /> },
 ];
 
-const reviews: Review[] = [
+const INITIAL_REVIEWS: Review[] = [
     {
         id: "1",
         name: "Researcher",
@@ -76,6 +77,36 @@ const StatCounter = ({ label, value, suffix, icon }: typeof stats[0]) => {
 };
 
 const TrustNode: React.FC = () => {
+    const [reviews, setReviews] = useState<Review[]>(INITIAL_REVIEWS);
+    const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+
+    // Initial load from localStorage
+    useEffect(() => {
+        const stored = localStorage.getItem('aioverse_feedback');
+        if (stored) {
+            try {
+                const parsed = JSON.parse(stored);
+                setReviews([...INITIAL_REVIEWS, ...parsed]);
+            } catch (e) {
+                console.error("Error loading feedback logs:", e);
+            }
+        }
+    }, []);
+
+    const handleNewFeedback = (newReviewData: { name: string; affiliation: string; quote: string; imageSrc: string; thumbnailSrc: string }) => {
+        const newReview: Review = {
+            id: Date.now(),
+            ...newReviewData
+        };
+
+        const updated = [newReview, ...reviews];
+        setReviews(updated);
+
+        // Save only new user reviews to localStorage
+        const userOnly = updated.filter(r => !INITIAL_REVIEWS.find(ir => ir.id === r.id));
+        localStorage.setItem('aioverse_feedback', JSON.stringify(userOnly));
+    };
+
     return (
         <section id="trust" className="py-24 md:py-32 px-6 max-w-7xl mx-auto border-t border-espresso-700 relative overflow-hidden">
             {/* Header */}
@@ -86,9 +117,18 @@ const TrustNode: React.FC = () => {
                         The Trust <span className="text-accent-orange">Node</span>
                     </h2>
                 </div>
-                <p className="font-mono text-xs text-latte-500 max-w-sm border-l border-espresso-700 pl-4 py-1">
-                    Quantifiable impact and verified peer feedback from the AIOVerse development network.
-                </p>
+                <div className="flex flex-col gap-4">
+                    <p className="font-mono text-xs text-latte-500 max-w-sm border-l border-espresso-700 pl-4 py-1">
+                        Quantifiable impact and verified peer feedback from the AIOVerse development network.
+                    </p>
+                    <button
+                        onClick={() => setIsFeedbackOpen(true)}
+                        className="flex items-center gap-2 font-mono text-[10px] text-accent-orange hover:text-white transition-colors group px-4 py-2 border border-espresso-700 hover:border-accent-orange rounded-sm self-start"
+                    >
+                        <PlusCircle size={14} className="group-hover:rotate-90 transition-transform" />
+                        LEAVE_FEEDBACK_SIGNAL
+                    </button>
+                </div>
             </div>
 
             {/* Stats Grid */}
@@ -99,13 +139,19 @@ const TrustNode: React.FC = () => {
             </div>
 
             {/* Testimonials Console Integration */}
-            <div className="relative group p-1 bg-gradient-to-r from-espresso-700/20 to-espresso-800/20 rounded-sm border border-espresso-700/50">
+            <div className="relative group p-1 bg-gradient-to-r from-espresso-700/20 to-espresso-800/20 rounded-sm border border-espresso-700/50 min-h-[400px]">
                 <div className="absolute top-4 left-6 z-20 flex items-center gap-2">
                     <Terminal size={14} className="text-accent-blue" />
                     <span className="font-mono text-[10px] text-latte-400 uppercase tracking-widest">FEEDBACK_LOGS_PRO_V.5.0</span>
                 </div>
                 <TestimonialSlider reviews={reviews} className="bg-transparent pt-12 md:pt-16" />
             </div>
+
+            <FeedbackModal
+                isOpen={isFeedbackOpen}
+                onClose={() => setIsFeedbackOpen(false)}
+                onSubmitSuccess={handleNewFeedback}
+            />
         </section>
     );
 };

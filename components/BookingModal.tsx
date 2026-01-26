@@ -30,7 +30,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, preselecte
         setStatus('loading');
 
         // This URL will be provided by the user from Google Apps Script setup
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw01XhQcNNI0ZOSAjYR0H05bS8x_EIHiGGGq9FzqoOQKqtTIAc66FIEQx58zUgjWBj7/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyscB75yF2JiFFfbQWm3i0PKwbs9LqnSGwp90w6FibApY-Dhhfq14OL8rNLGzvjHhNd8A/exec';
 
         if (!SCRIPT_URL) {
             // For now, simulate success if no URL is provided (until the user sets it up)
