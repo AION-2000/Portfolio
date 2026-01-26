@@ -42,7 +42,7 @@ const FeedbackModal: React.FC<FeedbackModalProps> = ({ isOpen, onClose, onSubmit
         e.preventDefault();
         setStatus('loading');
 
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyscB75yF2JiFFfbQWm3i0PKwbs9LqnSGwp90w6FibApY-Dhhfq14OL8rNLGzvjHhNd8A/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRgOJ__soLVFXBz5yZZM2mlzAPP0Ry6D20mjq-HNWF9l3NhZsxcPVLvWz1l2Qb07zOZg/exec';
 
         const formBody = new URLSearchParams();
         formBody.append('formType', 'feedback');
