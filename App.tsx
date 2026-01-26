@@ -13,6 +13,7 @@ import { Routes, Route } from 'react-router-dom';
 import Services from './components/Services';
 import Hyperspeed from './components/ui/Hyperspeed';
 import { hyperspeedPresets } from './components/ui/hyperspeedPresets';
+import { Analytics } from '@vercel/analytics/react';
 
 // Extracted About Section for Scroll Effects
 const AboutSection = () => {
@@ -357,6 +358,7 @@ function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      <Analytics />
     </div>
   );
 }
