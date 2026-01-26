@@ -251,9 +251,15 @@ const ContactSection = ({ onOpenBooking }: { onOpenBooking: () => void }) => {
 
 function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
+  const [selectedService, setSelectedService] = useState<string | undefined>(undefined);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
   const [showHyperspeed, setShowHyperspeed] = useState(false);
+
+  const handleOpenBooking = (serviceName?: string) => {
+    setSelectedService(serviceName);
+    setIsBookingOpen(true);
+  };
 
   // Transition from Intro -> Hyperspeed -> Main Content
   const handleEnterFromIntro = () => {
@@ -338,16 +344,16 @@ function App() {
                   <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
                     <Gallery />
                     <AboutSection />
-                    <ContactSection onOpenBooking={() => setIsBookingOpen(true)} />
+                    <ContactSection onOpenBooking={() => handleOpenBooking()} />
                     <Footer />
                   </div>
                 </>
               } />
-              <Route path="/services" element={<Services />} />
+              <Route path="/services" element={<Services onInitiate={(name) => handleOpenBooking(name)} />} />
             </Routes>
 
             <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
-            <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} />
+            <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} preselectedService={selectedService} />
           </motion.div>
         )}
       </AnimatePresence>

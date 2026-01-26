@@ -107,7 +107,11 @@ const specializedServices = [
     }
 ];
 
-export default function Services() {
+interface ServicesProps {
+    onInitiate: (serviceName: string) => void;
+}
+
+export default function Services({ onInitiate }: ServicesProps) {
     return (
         <div className="min-h-screen bg-espresso-950 text-latte-100 py-16 md:py-24 px-6 relative overflow-hidden">
             <div className="absolute inset-0 pointer-events-none opacity-20">
@@ -191,9 +195,13 @@ export default function Services() {
                                         <motion.button
                                             whileHover={{ scale: 1.02 }}
                                             whileTap={{ scale: 0.98 }}
+                                            onClick={() => onInitiate(tier.title)}
                                             className="w-full relative py-4 bg-transparent border border-latte-100/20 text-latte-100 font-mono font-bold text-xs hover:bg-latte-100 hover:text-espresso-950 transition-all duration-300"
                                         >
-                                            INITIATE_SESSION()
+                                            <span className="relative z-10 flex items-center justify-center gap-2">
+                                                <Terminal size={12} />
+                                                INITIATE_SESSION()
+                                            </span>
                                         </motion.button>
                                     </div>
                                 </div>
@@ -212,11 +220,11 @@ export default function Services() {
                     </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
                         {specializedServices.map((special, idx) => (
-                            <motion.div key={special.title} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="p-6 bg-espresso-900/30 border border-espresso-700/50 rounded-sm hover:border-accent-blue/50 transition-colors group">
+                            <motion.div key={special.title} initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ delay: idx * 0.1 }} className="p-6 bg-espresso-900/30 border border-espresso-700/50 rounded-sm hover:border-accent-blue/50 transition-colors group relative flex flex-col">
                                 <div className="p-2 bg-espresso-950/50 rounded-sm w-fit mb-4 group-hover:scale-110 transition-transform">{special.icon}</div>
                                 <h4 className="font-mono font-bold text-sm mb-1 uppercase text-latte-200">{special.title}</h4>
                                 <div className="text-accent-orange font-mono text-sm font-bold mb-4">{special.price}</div>
-                                <ul className="space-y-2">
+                                <ul className="space-y-2 mb-6 flex-grow">
                                     {special.items.map(item => (
                                         <li key={item} className="text-[10px] font-mono text-latte-500 flex items-start gap-2">
                                             <span className="w-1 h-1 bg-accent-blue rounded-full mt-1.5 flex-shrink-0" />
@@ -224,6 +232,12 @@ export default function Services() {
                                         </li>
                                     ))}
                                 </ul>
+                                <button
+                                    onClick={() => onInitiate(special.title)}
+                                    className="w-full py-2 bg-espresso-800 border border-espresso-700 font-mono text-[9px] text-latte-400 hover:bg-accent-blue hover:text-espresso-950 transition-all uppercase tracking-widest"
+                                >
+                                    Request_Node
+                                </button>
                             </motion.div>
                         ))}
                     </div>

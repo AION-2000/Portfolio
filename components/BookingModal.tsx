@@ -5,16 +5,24 @@ import { X, Send, Terminal, Loader2, CheckCircle2 } from 'lucide-react';
 interface BookingModalProps {
     isOpen: boolean;
     onClose: () => void;
+    preselectedService?: string;
 }
 
-const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
+const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, preselectedService }) => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        projectType: 'AI / Automation',
+        projectType: preselectedService || 'AI / Automation',
         description: '',
         preference: ''
     });
+
+    // Sync form with preselectedService when it changes (or when modal opens)
+    React.useEffect(() => {
+        if (preselectedService && isOpen) {
+            setFormData(prev => ({ ...prev, projectType: preselectedService }));
+        }
+    }, [preselectedService, isOpen]);
     const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
     const handleSubmit = async (e: React.FormEvent) => {
@@ -104,14 +112,17 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                                         <CheckCircle2 className="w-8 h-8 text-accent-green" />
                                     </motion.div>
                                     <h3 className="font-mono text-xl text-latte-100 mb-2">Session Initialized</h3>
-                                    <p className="font-mono text-sm text-latte-500 mb-8 px-8">
-                    // Your request has been transmitted. I'll get back to you within 24 standard hours.
+                                    <p className="font-mono text-sm text-latte-500 mb-2 px-8">
+                                        // Lead successfully synchronized with central database.
+                                    </p>
+                                    <p className="font-mono text-[10px] text-accent-blue mb-8 px-8 uppercase tracking-widest">
+                                        Entry ID: {Math.random().toString(36).substr(2, 9).toUpperCase()} | Status: SECURE_STORED
                                     </p>
                                     <button
                                         onClick={handleReset}
-                                        className="px-8 py-3 bg-espresso-800 border border-latte-500 text-latte-500 font-mono text-sm hover:bg-espresso-700 transition-colors"
+                                        className="px-8 py-3 bg-espresso-800 border border-latte-500 text-latte-500 font-mono text-sm hover:bg-white hover:text-espresso-950 transition-colors"
                                     >
-                                        Close Session
+                                        Return to Terminal
                                     </button>
                                 </div>
                             ) : (
@@ -143,16 +154,29 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose }) => {
                                         </div>
 
                                         <div className="space-y-1">
-                                            <label className="font-mono text-[10px] text-accent-orange uppercase tracking-wider">Project Type</label>
+                                            <label className="font-mono text-[10px] text-accent-orange uppercase tracking-wider">Project / Service Package</label>
                                             <select
                                                 value={formData.projectType}
                                                 onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
                                                 className="w-full bg-espresso-950 border border-espresso-700 p-3 font-mono text-sm text-latte-100 focus:outline-none focus:border-accent-blue transition-colors appearance-none"
                                             >
-                                                <option>AI / Automation</option>
-                                                <option>Full-stack Development</option>
-                                                <option>Web Design</option>
-                                                <option>Consultation</option>
+                                                <optgroup label="Main Tiers">
+                                                    <option>Starter AI & Web</option>
+                                                    <option>Advanced AI App</option>
+                                                    <option>Full AI Product</option>
+                                                </optgroup>
+                                                <optgroup label="Specialized Modules">
+                                                    <option>XAI Implementation</option>
+                                                    <option>Computer Vision</option>
+                                                    <option>NLP & AI Chatbots</option>
+                                                    <option>AI-Powered Web</option>
+                                                </optgroup>
+                                                <optgroup label="General">
+                                                    <option>AI / Automation</option>
+                                                    <option>Full-stack Development</option>
+                                                    <option>Web Design</option>
+                                                    <option>Consultation</option>
+                                                </optgroup>
                                             </select>
                                         </div>
 
