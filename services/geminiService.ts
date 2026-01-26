@@ -1,4 +1,4 @@
-import { GoogleGenerativeAI, ChatSession, EnhancedGenerateContentResponse } from "@google/generative-ai";
+import { GoogleGenAI, Chat, GenerateContentResponse } from "@google/genai";
 
 const PORTFOLIO_CONTEXT = `
 [IDENTITY]
@@ -73,36 +73,25 @@ You are a highly intelligent, efficient, and slightly futuristic command-line in
 ${PORTFOLIO_CONTEXT}
 `;
 
-let genAI: GoogleGenerativeAI | null = null;
-let chatSession: ChatSession | null = null;
+let chatSession: Chat | null = null;
+let aiInstance: GoogleGenAI | null = null;
 
-const getAIClient = (): GoogleGenerativeAI => {
-  if (!genAI) {
+const getAIClient = (): GoogleGenAI => {
+  if (!aiInstance) {
     const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
     if (!apiKey) throw new Error("API Key is missing.");
-    genAI = new GoogleGenerativeAI(apiKey);
+    aiInstance = new GoogleGenAI({ apiKey });
   }
-  return genAI;
+  return aiInstance;
 };
 
-export const initChatSession = (): ChatSession => {
+export const initChatSession = (): Chat => {
   if (!chatSession) {
     const ai = getAIClient();
-    const model = ai.getGenerativeModel({
-      model: "gemini-1.5-flash",
-    });
-    chatSession = model.startChat({
-      history: [
-        {
-          role: "user",
-          parts: [{ text: "You are AIOVerse Shell v0.4. Follow these instructions: " + SYSTEM_INSTRUCTION }],
-        },
-        {
-          role: "model",
-          parts: [{ text: "Understood. I am AIOVerse Shell v0.4, ready to assist with full knowledge of Aion's portfolio, services, and projects." }],
-        },
-      ],
-      generationConfig: {
+    chatSession = ai.chats.create({
+      model: 'gemini-2.0-flash-exp',
+      config: {
+        systemInstruction: SYSTEM_INSTRUCTION,
         temperature: 0.7,
       },
     });
@@ -110,11 +99,11 @@ export const initChatSession = (): ChatSession => {
   return chatSession;
 };
 
-export const sendMessageToGemini = async (message: string) => {
+export const sendMessageToGemini = async (message: string): Promise<AsyncIterable<GenerateContentResponse>> => {
   try {
     const chat = initChatSession();
-    const result = await chat.sendMessageStream(message);
-    return result.stream;
+    const responseStream = await chat.sendMessageStream({ message });
+    return responseStream;
   } catch (error) {
     console.error("Error communicating with Gemini:", error);
     throw error;

@@ -46,7 +46,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, setIsOpen }) => {
 
       let fullText = '';
       for await (const chunk of stream) {
-        const chunkText = chunk.text();
+        const chunkText = chunk.text;
         if (chunkText) {
           fullText += chunkText;
           setMessages(prev => prev.map(msg =>
