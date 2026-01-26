@@ -90,13 +90,14 @@ export default function Services() {
                     </motion.p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+                <div className="flex md:grid md:grid-cols-3 gap-6 md:gap-12 overflow-x-auto md:overflow-hidden pb-8 md:pb-0 snap-x snap-mandatory scrollbar-hide">
                     {serviceTiers.map((tier, idx) => (
                         <motion.div
                             key={tier.title}
                             initial={{ opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ delay: idx * 0.1 + 0.2 }}
+                            className="min-w-[85vw] md:min-w-0 snap-center"
                         >
                             <ElectricBorder
                                 color={tier.color}

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Gallery from './components/Gallery';
@@ -11,6 +11,8 @@ import { motion, useScroll, useTransform, Variants, AnimatePresence } from 'fram
 import { Download, Linkedin, Facebook, Instagram, MessageCircle } from 'lucide-react';
 import { Routes, Route } from 'react-router-dom';
 import Services from './components/Services';
+import Hyperspeed from './components/ui/Hyperspeed';
+import { hyperspeedPresets } from './components/ui/hyperspeedPresets';
 
 // Extracted About Section for Scroll Effects
 const AboutSection = () => {
@@ -251,6 +253,23 @@ function App() {
   const [isBookingOpen, setIsBookingOpen] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [showIntro, setShowIntro] = useState(true);
+  const [showHyperspeed, setShowHyperspeed] = useState(false);
+
+  // Transition from Intro -> Hyperspeed -> Main Content
+  const handleEnterFromIntro = () => {
+    setShowIntro(false);
+    setShowHyperspeed(true);
+  };
+
+  // Effect to end hyperspeed after a duration
+  useEffect(() => {
+    if (showHyperspeed) {
+      const timer = setTimeout(() => {
+        setShowHyperspeed(false);
+      }, 3500); // 3.5 seconds of hyperspeed animation
+      return () => clearTimeout(timer);
+    }
+  }, [showHyperspeed]);
 
   return (
     <div className="bg-espresso-900 min-h-screen text-latte-100 selection:bg-accent-orange selection:text-espresso-950 relative overflow-x-hidden">
@@ -264,7 +283,42 @@ function App() {
       <AnimatePresence mode="wait">
         {showIntro ? (
           <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8 }}>
-            <Intro onEnter={() => setShowIntro(false)} />
+            <Intro onEnter={handleEnterFromIntro} />
+          </motion.div>
+        ) : showHyperspeed ? (
+          <motion.div
+            key="hyperspeed"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
+            transition={{ duration: 0.6 }}
+            className="fixed inset-0 z-[100] bg-black"
+          >
+            <Hyperspeed effectOptions={hyperspeedPresets.orange} />
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 1, 1, 0] }}
+                transition={{ duration: 3.5, times: [0, 0.2, 0.8, 1] }}
+                className="text-center font-mono"
+              >
+                <motion.p
+                  className="text-accent-orange text-xs tracking-widest mb-2"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 0.5, repeat: Infinity }}
+                >
+                  INITIALIZING WORKSPACE
+                </motion.p>
+                <motion.h1
+                  className="text-latte-100 text-4xl md:text-6xl font-bold tracking-tighter"
+                  initial={{ y: 20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  transition={{ delay: 0.3 }}
+                >
+                  ENTERING AIOVERSE
+                </motion.h1>
+              </motion.div>
+            </div>
           </motion.div>
         ) : (
           <motion.div key="content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
