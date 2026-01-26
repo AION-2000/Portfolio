@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ArrowLeft, Database, Brain, Cpu, Terminal, Network, X } from "lucide-react";
@@ -51,6 +52,11 @@ export default function Laboratory() {
 
     return (
         <div className="min-h-screen bg-espresso-950 text-latte-100 py-16 md:py-24 px-6 relative overflow-hidden">
+            <Helmet>
+                <title>Laboratory | AI Research & Demos | AIOVerse</title>
+                <meta name="description" content="Experience real-time AI and web demonstrations in the AIOVerse Laboratory. Interactive XAI heatmaps, system performance analytics, and neural data protocols." />
+                <link rel="canonical" href="https://portfolio-aioverse.vercel.app/laboratory" />
+            </Helmet>
             <div className="absolute inset-0 pointer-events-none opacity-20">
                 <GridScan
                     sensitivity={0.5}

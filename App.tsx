@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
+import { HelmetProvider, Helmet } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Gallery from './components/Gallery';
@@ -303,88 +304,95 @@ function App() {
   }, [showHyperspeed]);
 
   return (
-    <div className="bg-espresso-900 min-h-screen text-latte-100 selection:bg-accent-orange selection:text-espresso-950 relative overflow-x-hidden">
-      <CustomCursor />
+    <HelmetProvider>
+      <div className="bg-espresso-900 min-h-screen text-latte-100 selection:bg-accent-orange selection:text-espresso-950 relative overflow-x-hidden">
+        <Helmet>
+          <title>AIOVerse | Shihab Shahriar Aion - AI & Web Developer</title>
+          <meta name="description" content="Official portfolio of Shihab Shahriar Aion. Specialist in AI, Machine Learning, XAI, and Full Stack Development. Discover innovative AI solutions." />
+          <link rel="canonical" href="https://portfolio-aioverse.vercel.app/" />
+        </Helmet>
+        <CustomCursor />
 
-      {/* Noise Texture Overlay for that "Premium Framer" feel */}
-      <div className="fixed inset-0 pointer-events-none z-[5] opacity-[0.03] mix-blend-overlay"
-        style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}>
-      </div>
+        {/* Noise Texture Overlay for that "Premium Framer" feel */}
+        <div className="fixed inset-0 pointer-events-none z-[5] opacity-[0.03] mix-blend-overlay"
+          style={{ backgroundImage: 'url("https://grainy-gradients.vercel.app/noise.svg")' }}>
+        </div>
 
-      <AnimatePresence mode="wait">
-        {showIntro ? (
-          <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8 }}>
-            <Intro onEnter={handleEnterFromIntro} />
-          </motion.div>
-        ) : showHyperspeed ? (
-          <motion.div
-            key="hyperspeed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.6 }}
-            className="fixed inset-0 z-[100] bg-black"
-          >
-            <Hyperspeed effectOptions={hyperspeedPresets.orange} />
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: [0, 1, 1, 0] }}
-                transition={{ duration: 3.5, times: [0, 0.2, 0.8, 1] }}
-                className="text-center font-mono"
-              >
-                <motion.p
-                  className="text-accent-orange text-xs tracking-widest mb-2"
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 0.5, repeat: Infinity }}
+        <AnimatePresence mode="wait">
+          {showIntro ? (
+            <motion.div key="intro" exit={{ opacity: 0, filter: 'blur(10px)' }} transition={{ duration: 0.8 }}>
+              <Intro onEnter={handleEnterFromIntro} />
+            </motion.div>
+          ) : showHyperspeed ? (
+            <motion.div
+              key="hyperspeed"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, scale: 1.1 }}
+              transition={{ duration: 0.6 }}
+              className="fixed inset-0 z-[100] bg-black"
+            >
+              <Hyperspeed effectOptions={hyperspeedPresets.orange} />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: [0, 1, 1, 0] }}
+                  transition={{ duration: 3.5, times: [0, 0.2, 0.8, 1] }}
+                  className="text-center font-mono"
                 >
-                  INITIALIZING WORKSPACE
-                </motion.p>
-                <motion.h1
-                  className="text-latte-100 text-4xl md:text-6xl font-bold tracking-tighter"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  transition={{ delay: 0.3 }}
-                >
-                  ENTERING AIOVERSE
-                </motion.h1>
-              </motion.div>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div key="content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
-            <Navbar />
+                  <motion.p
+                    className="text-accent-orange text-xs tracking-widest mb-2"
+                    animate={{ opacity: [0.5, 1, 0.5] }}
+                    transition={{ duration: 0.5, repeat: Infinity }}
+                  >
+                    INITIALIZING WORKSPACE
+                  </motion.p>
+                  <motion.h1
+                    className="text-latte-100 text-4xl md:text-6xl font-bold tracking-tighter"
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    ENTERING AIOVERSE
+                  </motion.h1>
+                </motion.div>
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div key="content" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1 }}>
+              <Navbar />
 
-            {/* 
+              {/* 
               Scroll Architecture:
               Hero is Sticky at Top (z-0).
               Content Wrapper is Relative (z-10) with background.
               As user scrolls, Content slides UP over the Hero.
             */}
 
-            <Routes>
-              <Route path="/" element={
-                <>
-                  <Hero onOpenChat={() => setIsChatOpen(true)} />
-                  <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
-                    <Gallery />
-                    <TrustNode />
-                    <AboutSection />
-                    <ContactSection onOpenBooking={() => handleOpenBooking()} />
-                    <Footer />
-                  </div>
-                </>
-              } />
-              <Route path="/services" element={<Services onInitiate={(name) => handleOpenBooking(name)} />} />
-              <Route path="/laboratory" element={<Laboratory />} />
-            </Routes>
+              <Routes>
+                <Route path="/" element={
+                  <>
+                    <Hero onOpenChat={() => setIsChatOpen(true)} />
+                    <div className="relative z-10 bg-espresso-900 w-full min-h-screen box-border shadow-[0_-25px_50px_rgba(0,0,0,0.8)] overflow-x-hidden">
+                      <Gallery />
+                      <TrustNode />
+                      <AboutSection />
+                      <ContactSection onOpenBooking={() => handleOpenBooking()} />
+                      <Footer />
+                    </div>
+                  </>
+                } />
+                <Route path="/services" element={<Services onInitiate={(name) => handleOpenBooking(name)} />} />
+                <Route path="/laboratory" element={<Laboratory />} />
+              </Routes>
 
-            <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
-            <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} preselectedService={selectedService} />
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+              <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
+              <BookingModal isOpen={isBookingOpen} onClose={() => setIsBookingOpen(false)} preselectedService={selectedService} />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </HelmetProvider>
   );
 }
 

@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://aio-verse.vercel.app/sitemap.xml
+Sitemap: https://portfolio-aioverse.vercel.app/sitemap.xml

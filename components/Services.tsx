@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
+import { Helmet } from "react-helmet-async";
 import ElectricBorder from "./ui/ElectricBorder";
 import { Sparkles, Zap, Shield, Rocket, ArrowLeft, Check, Terminal, Brain, Eye, MessageSquare, Globe, UserCheck, Star, Clock } from "lucide-react";
 import { motion } from "framer-motion";
@@ -206,6 +207,11 @@ interface ServicesProps {
 export default function Services({ onInitiate }: ServicesProps) {
     return (
         <div className="min-h-screen bg-espresso-950 text-latte-100 py-16 md:py-24 px-6 relative overflow-hidden">
+            <Helmet>
+                <title>Services | AI & Web Solutions | AIOVerse</title>
+                <meta name="description" content="Explore professional AI, Machine Learning, and Web Development services. Specialized in XAI, Computer Vision, and NLP solutions for businesses and research." />
+                <link rel="canonical" href="https://portfolio-aioverse.vercel.app/services" />
+            </Helmet>
             <div className="absolute inset-0 pointer-events-none opacity-20">
                 <GridScan
                     sensitivity={0.5}
