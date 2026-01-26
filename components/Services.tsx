@@ -55,7 +55,7 @@ const serviceTiers = [
             "Modern React-based frontend",
             "Docker deployment + support"
         ],
-        color: "#2ECC7 green-400",
+        color: "#2ECC71",
         icon: <Shield className="size-6 text-green-400" />,
         suffix: "product",
         delivery: "20–30 days"
