@@ -214,6 +214,13 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, preselecte
                                         </div>
                                     )}
 
+                                    {/* Privacy Signal */}
+                                    <div className="bg-espresso-950/50 p-3 border-l-2 border-latte-700">
+                                        <p className="font-mono text-[9px] text-latte-500 leading-tight">
+                                            <span className="text-accent-blue">● PRIVACY_SIGNAL:</span> All data transmitted via this node is encrypted and used exclusively for project initialization. By clicking below, you consent to secure data synchronization with Aion's private leads database. No third-party relay active.
+                                        </p>
+                                    </div>
+
                                     <button
                                         disabled={status === 'loading'}
                                         type="submit"
