@@ -3,6 +3,7 @@ import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CustomCursor: React.FC = () => {
   const [isHovering, setIsHovering] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 
@@ -41,44 +42,54 @@ const CustomCursor: React.FC = () => {
       }
     };
 
+    const checkVisibility = () => {
+      const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      setIsVisible(!isTouch);
+    };
+
+    checkVisibility();
     window.addEventListener('mousemove', moveCursor);
     window.addEventListener('mouseover', handleMouseOver);
+    window.addEventListener('touchstart', checkVisibility);
 
     return () => {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
+      window.removeEventListener('touchstart', checkVisibility);
     };
   }, [cursorX, cursorY]);
+
+  if (!isVisible) return null;
 
   return (
     <>
       {/* Trailing Elements (fades out when hovering interactive elements) */}
       <motion.div
         className="fixed top-0 left-0 w-2 h-2 bg-accent-orange pointer-events-none z-[9990] rounded-sm"
-        style={{ 
-          x: trail3X, 
-          y: trail3Y, 
-          translateX: "-50%", 
+        style={{
+          x: trail3X,
+          y: trail3Y,
+          translateX: "-50%",
           translateY: "-50%",
-          opacity: isHovering ? 0 : 0.2 
+          opacity: isHovering ? 0 : 0.2
         }}
       />
       <motion.div
         className="fixed top-0 left-0 w-2 h-2 bg-accent-orange pointer-events-none z-[9991] rounded-sm"
-        style={{ 
-          x: trail2X, 
-          y: trail2Y, 
-          translateX: "-50%", 
+        style={{
+          x: trail2X,
+          y: trail2Y,
+          translateX: "-50%",
           translateY: "-50%",
           opacity: isHovering ? 0 : 0.4
         }}
       />
       <motion.div
         className="fixed top-0 left-0 w-2 h-2 bg-accent-orange pointer-events-none z-[9992] rounded-sm"
-        style={{ 
-          x: trail1X, 
-          y: trail1Y, 
-          translateX: "-50%", 
+        style={{
+          x: trail1X,
+          y: trail1Y,
+          translateX: "-50%",
           translateY: "-50%",
           opacity: isHovering ? 0 : 0.6
         }}
@@ -100,7 +111,7 @@ const CustomCursor: React.FC = () => {
         }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
       />
-      
+
       {/* Target Reticle Lines (Only visible when hovering) */}
       <motion.div
         className="fixed top-0 left-0 w-[40px] h-[1px] bg-accent-orange pointer-events-none z-[9998]"

@@ -66,14 +66,14 @@ const Hero: React.FC<HeroProps> = ({ onOpenChat }) => {
         initial={{ opacity: 0, x: 50, scale: 0.8 }}
         animate={{ opacity: 1, x: 0, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-        className="absolute top-24 right-6 md:top-32 md:right-24 z-20 group"
+        className="absolute top-20 right-6 md:top-32 md:right-24 z-20 group"
       >
         <div className="relative">
           {/* Technical Frame Accents */}
           <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-accent-orange opacity-60 group-hover:opacity-100 transition-opacity"></div>
           <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-accent-orange opacity-60 group-hover:opacity-100 transition-opacity"></div>
 
-          <div className="w-24 h-24 md:w-48 md:h-48 rounded-sm overflow-hidden border border-espresso-700 bg-espresso-900 group-hover:border-accent-orange/50 transition-colors duration-500 shadow-2xl shadow-black/50">
+          <div className="w-16 h-16 md:w-48 md:h-48 rounded-sm overflow-hidden border border-espresso-700 bg-espresso-900 group-hover:border-accent-orange/50 transition-colors duration-500 shadow-2xl shadow-black/50">
             <img
               src="/profile.jpg"
               alt="Shihab Shahriar Aion"
@@ -122,7 +122,7 @@ impl System {
         <pre>{`> cargo build --release`}</pre>
       </motion.div>
 
-      <div className="z-10 max-w-5xl relative w-full mt-[-15vh] md:mt-0">
+      <div className="z-10 max-w-5xl relative w-full mt-20 md:mt-0">
         <motion.div
           initial={{ opacity: 0, width: 0 }}
           animate={{ opacity: 1, width: "auto" }}
