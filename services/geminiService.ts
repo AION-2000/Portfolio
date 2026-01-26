@@ -89,7 +89,7 @@ export const initChatSession = (): ChatSession => {
   if (!chatSession) {
     const ai = getAIClient();
     const model = ai.getGenerativeModel({
-      model: "models/gemini-pro",
+      model: "gemini-pro",
     });
     chatSession = model.startChat({
       history: [
