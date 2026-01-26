@@ -89,11 +89,19 @@ export const initChatSession = (): ChatSession => {
   if (!chatSession) {
     const ai = getAIClient();
     const model = ai.getGenerativeModel({
-      model: "gemini-1.5-pro",
-      systemInstruction: SYSTEM_INSTRUCTION,
+      model: "models/gemini-pro",
     });
     chatSession = model.startChat({
-      history: [],
+      history: [
+        {
+          role: "user",
+          parts: [{ text: "You are AIOVerse Shell v0.4. Follow these instructions: " + SYSTEM_INSTRUCTION }],
+        },
+        {
+          role: "model",
+          parts: [{ text: "Understood. I am AIOVerse Shell v0.4, ready to assist with full knowledge of Aion's portfolio, services, and projects." }],
+        },
+      ],
       generationConfig: {
         temperature: 0.7,
       },
