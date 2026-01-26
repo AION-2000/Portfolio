@@ -15,6 +15,7 @@ import Hyperspeed from './components/ui/Hyperspeed';
 import { hyperspeedPresets } from './components/ui/hyperspeedPresets';
 import { RippleEffect } from './components/ui/Ripple';
 import TrustNode from './components/TrustNode';
+import Laboratory from './components/Laboratory';
 
 // Extracted About Section for Scroll Effects
 const AboutSection = () => {
@@ -375,6 +376,7 @@ function App() {
                 </>
               } />
               <Route path="/services" element={<Services onInitiate={(name) => handleOpenBooking(name)} />} />
+              <Route path="/laboratory" element={<Laboratory />} />
             </Routes>
 
             <ChatWidget isOpen={isChatOpen} setIsOpen={setIsChatOpen} />
