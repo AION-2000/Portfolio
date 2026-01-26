@@ -25,19 +25,19 @@ const AboutSection = () => {
   const rotateX = useTransform(scrollYProgress, [0, 0.5, 1], [10, 0, -10]);
 
   return (
-    <section ref={containerRef} id="about" className="py-24 md:py-32 px-6 md:px-12 max-w-6xl mx-auto border-t border-espresso-700">
-      <div className="grid md:grid-cols-2 gap-12 items-start" style={{ perspective: '1000px' }}>
+    <section ref={containerRef} id="about" className="py-16 md:py-32 px-6 md:px-12 max-w-6xl mx-auto border-t border-espresso-700">
+      <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start" style={{ perspective: '1000px' }}>
         <motion.div style={{ y: yText }}>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, ease: [0.33, 1, 0.68, 1] }}
-            className="font-mono text-2xl sm:text-3xl md:text-4xl mb-8 text-latte-100 overflow-hidden break-words"
+            className="font-mono text-xl sm:text-3xl md:text-4xl mb-6 md:mb-8 text-latte-100 overflow-hidden break-words"
           >
             <span className="text-accent-orange">function</span> <span className="text-accent-blue">About_Me</span>()
           </motion.h2>
-          <div className="font-mono text-sm text-latte-400 space-y-6 leading-relaxed">
+          <div className="font-mono text-[10px] sm:text-sm text-latte-400 space-y-4 md:space-y-6 leading-relaxed">
             <motion.p
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
@@ -68,7 +68,7 @@ const AboutSection = () => {
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="bg-espresso-800 p-6 rounded-sm border border-espresso-700 font-mono text-xs shadow-2xl hover:shadow-accent-orange/10 transition-shadow duration-500 transform-gpu overflow-x-auto"
+          className="bg-espresso-800 p-4 md:p-6 rounded-sm border border-espresso-700 font-mono text-[10px] md:text-xs shadow-2xl hover:shadow-accent-orange/10 transition-shadow duration-500 transform-gpu overflow-x-auto"
         >
           <div className="flex gap-2 mb-4 border-b border-espresso-700 pb-2">
             <span className="text-latte-500">skills.json</span>

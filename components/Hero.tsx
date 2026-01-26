@@ -34,7 +34,7 @@ const Hero: React.FC<HeroProps> = ({ onOpenChat }) => {
     <motion.section
       ref={containerRef}
       style={{ opacity, scale, y, filter }}
-      className="sticky top-0 h-screen w-full flex flex-col justify-center items-start overflow-hidden bg-espresso-950 px-4 md:px-24 z-0 perspective-1000"
+      className="sticky top-0 h-[100dvh] w-full flex flex-col justify-center items-start overflow-hidden bg-espresso-950 px-6 md:px-24 z-0 perspective-1000"
     >
       {/* Background Tech Grid - Animated GridScan */}
       <div className="absolute inset-0 pointer-events-none opacity-40">
@@ -54,19 +54,26 @@ const Hero: React.FC<HeroProps> = ({ onOpenChat }) => {
 
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-espresso-900 via-transparent to-transparent opacity-50" />
 
-      {/* Profile Picture - Top Right */}
+      {/* Background Large Name Text */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none overflow-hidden select-none z-0">
+        <h1 className="text-[20vw] md:text-[15vw] font-mono font-bold text-latte-100/5 whitespace-nowrap uppercase tracking-tighter leading-none">
+          SHIHAB SHAHRIAR AION
+        </h1>
+      </div>
+
+      {/* Profile Picture - Top Right (Restored) */}
       <motion.div
         initial={{ opacity: 0, x: 50, scale: 0.8 }}
         animate={{ opacity: 1, x: 0, scale: 1 }}
         transition={{ duration: 0.8, delay: 0.5, ease: "easeOut" }}
-        className="absolute top-24 right-4 md:top-32 md:right-24 z-20 group"
+        className="absolute top-24 right-6 md:top-32 md:right-24 z-20 group"
       >
         <div className="relative">
           {/* Technical Frame Accents */}
           <div className="absolute -top-2 -left-2 w-4 h-4 border-t-2 border-l-2 border-accent-orange opacity-60 group-hover:opacity-100 transition-opacity"></div>
           <div className="absolute -bottom-2 -right-2 w-4 h-4 border-b-2 border-r-2 border-accent-orange opacity-60 group-hover:opacity-100 transition-opacity"></div>
 
-          <div className="w-32 h-32 md:w-48 md:h-48 rounded-sm overflow-hidden border border-espresso-700 bg-espresso-900 group-hover:border-accent-orange/50 transition-colors duration-500 shadow-2xl shadow-black/50">
+          <div className="w-24 h-24 md:w-48 md:h-48 rounded-sm overflow-hidden border border-espresso-700 bg-espresso-900 group-hover:border-accent-orange/50 transition-colors duration-500 shadow-2xl shadow-black/50">
             <img
               src="/profile.jpg"
               alt="Shihab Shahriar Aion"
@@ -115,7 +122,7 @@ impl System {
         <pre>{`> cargo build --release`}</pre>
       </motion.div>
 
-      <div className="z-10 max-w-5xl relative w-full mt-[-10vh] md:mt-0">
+      <div className="z-10 max-w-5xl relative w-full mt-[-15vh] md:mt-0">
         <motion.div
           initial={{ opacity: 0, width: 0 }}
           animate={{ opacity: 1, width: "auto" }}
@@ -129,7 +136,7 @@ impl System {
         {/* Name Title 1 */}
         <div className="mb-2 md:mb-2 p-1 -m-1">
           <h1
-            className="font-mono font-bold text-5xl sm:text-6xl md:text-8xl text-latte-100 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
+            className="font-mono font-bold text-4xl sm:text-6xl md:text-8xl text-latte-100 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap"
             data-hover
           >
             <TypingText text="SHIHAB" delay={0.2} className="text-waveform" />
@@ -139,7 +146,7 @@ impl System {
         {/* Name Title 2 */}
         <div className="mb-6 p-1 -m-1">
           <h1
-            className="font-mono font-bold text-4xl sm:text-5xl md:text-8xl text-latte-500 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap gap-x-3 md:gap-x-4"
+            className="font-mono font-bold text-3xl sm:text-5xl md:text-8xl text-latte-500 tracking-tighter leading-none glitch-text cursor-default flex flex-wrap gap-x-2 md:gap-x-4"
             data-hover
           >
             <TypingText text="SHAHRIAR AION" delay={0.5} className="text-waveform" />
@@ -156,7 +163,7 @@ impl System {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1.2 }}
-          className="font-mono text-latte-400 text-xs sm:text-sm md:text-base max-w-xl leading-relaxed border-l-2 border-espresso-700 pl-4 md:pl-6 backdrop-blur-sm"
+          className="font-mono text-latte-400 text-[10px] sm:text-sm md:text-base max-w-xl leading-relaxed border-l-2 border-espresso-700 pl-4 md:pl-6 backdrop-blur-sm"
         >
           <span className="text-accent-blue">const</span> <span className="text-latte-200">engineer</span> = <span className="text-accent-green">"Full Stack & Cloud"</span>;<br /><br />
           Specializing in distributed systems, high-throughput APIs, and scalable infrastructure.
@@ -212,7 +219,7 @@ impl System {
             </motion.button>
           </Magnetic>
 
-          <div className="text-[10px] font-mono text-latte-500 flex flex-col">
+          <div className="text-[10px] font-mono text-latte-500 flex flex-row sm:flex-col gap-4 sm:gap-0">
             <motion.span animate={{ opacity: [0.5, 1, 0.5] }} transition={{ duration: 2, repeat: Infinity }}>
               Lat: 34ms
             </motion.span>

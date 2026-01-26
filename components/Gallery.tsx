@@ -62,8 +62,8 @@ const Gallery: React.FC = () => {
       {/* Velocity Text Strip */}
       <ScrollVelocity />
 
-      <div className="max-w-7xl mx-auto py-32 px-6 md:px-12">
-        <div className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between border-b border-espresso-700 pb-6 gap-6">
+      <div className="max-w-7xl mx-auto py-16 md:py-32 px-4 md:px-12">
+        <div className="mb-8 md:mb-12 flex flex-col md:flex-row md:items-end md:justify-between border-b border-espresso-700 pb-6 gap-6">
           <div>
             <span className="font-mono text-accent-orange text-xs mb-2 block animate-pulse">● PROJECT INDEX</span>
             <h2 className="font-mono text-xl sm:text-2xl md:text-5xl text-latte-100 tracking-tighter">
@@ -172,7 +172,7 @@ const Gallery: React.FC = () => {
 
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 gap-12 perspective-1000"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 perspective-1000"
         >
           {displayedProjects.map((project, index) => (
             <ProjectCard key={project.id} project={project} index={index} />
@@ -303,9 +303,9 @@ const ProjectCard: React.FC<{ project: Project; index: number }> = ({ project, i
         </div>
       </div>
 
-      <div className="p-6 relative bg-espresso-800 flex-1 translate-z-20">
+      <div className="p-4 md:p-6 relative bg-espresso-800 flex-1 translate-z-20">
         <div className="flex justify-between items-start mb-4">
-          <h3 className="font-mono text-xl text-latte-100 group-hover:text-accent-blue transition-colors duration-300">{project.title}</h3>
+          <h3 className="font-mono text-lg md:text-xl text-latte-100 group-hover:text-accent-blue transition-colors duration-300">{project.title}</h3>
           <ArrowUpRight className="text-latte-500 w-5 h-5 opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300" />
         </div>
         <p className="font-mono text-latte-400 text-xs leading-relaxed border-l border-espresso-700 pl-3 mb-6">

@@ -90,7 +90,7 @@ export default function Services() {
                     </motion.p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
                     {serviceTiers.map((tier, idx) => (
                         <motion.div
                             key={tier.title}
@@ -105,21 +105,21 @@ export default function Services() {
                                 borderRadius={16}
                                 className="h-full"
                             >
-                                <div className="p-8 bg-espresso-900/80 backdrop-blur-md rounded-2xl border border-espresso-700 h-full flex flex-col">
+                                <div className="p-6 md:p-8 bg-espresso-900/80 backdrop-blur-md rounded-2xl border border-espresso-700 h-full flex flex-col">
                                     <div className="flex items-center gap-3 mb-4">
                                         {tier.icon}
-                                        <h3 className="text-2xl font-mono font-bold">{tier.title}</h3>
+                                        <h3 className="text-xl md:text-2xl font-mono font-bold">{tier.title}</h3>
                                     </div>
-                                    <div className="text-4xl font-mono font-bold mb-4 text-latte-100">
+                                    <div className="text-3xl md:text-4xl font-mono font-bold mb-4 text-latte-100">
                                         {tier.price}
                                         {tier.price !== "Custom" && <span className="text-lg text-latte-500">/session</span>}
                                     </div>
-                                    <p className="text-latte-400 font-mono text-sm mb-8">
+                                    <p className="text-latte-400 font-mono text-xs md:text-sm mb-8">
                                         {tier.description}
                                     </p>
 
                                     <div className="mb-8 flex-grow">
-                                        <ul className="space-y-3 font-mono text-xs text-latte-300">
+                                        <ul className="space-y-3 font-mono text-[10px] md:text-xs text-latte-300">
                                             {tier.features.map(f => (
                                                 <li key={f} className="flex items-center gap-2">
                                                     <span className="text-accent-green">√</span> {f}
@@ -129,10 +129,10 @@ export default function Services() {
                                     </div>
 
                                     <div className="mt-auto pt-8 border-t border-espresso-800">
-                                        <div className="scale-75 -translate-x-10 origin-left">
+                                        <div className="scale-75 md:scale-75 -translate-x-10 md:-translate-x-10 origin-left">
                                             <DisplayCards cards={tier.cards} />
                                         </div>
-                                        <button className="w-full py-4 mt-6 bg-latte-100 text-espresso-950 font-mono font-bold text-sm hover:bg-white transition-colors">
+                                        <button className="w-full py-3 md:py-4 mt-6 bg-latte-100 text-espresso-950 font-mono font-bold text-xs md:text-sm hover:bg-white transition-colors">
                                             INITIATE ./deploy.sh
                                         </button>
                                     </div>
