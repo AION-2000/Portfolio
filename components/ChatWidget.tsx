@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal as TerminalIcon, X, Minus, Maximize2 } from 'lucide-react';
 import { sendMessageToGemini } from '../services/geminiService';
 import { ChatMessage } from '../types';
-import { GenerateContentResponse } from '@google/genai';
 
 interface ChatWidgetProps {
   isOpen: boolean;
@@ -12,7 +11,7 @@ interface ChatWidgetProps {
 
 const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, setIsOpen }) => {
   const [messages, setMessages] = useState<ChatMessage[]>([
-    { id: '1', role: 'model', text: 'AIOVerse Shell v0.3 initialized. \nService Matrix loaded. Type "services" to see my available packages. \nWaiting for input...' }
+    { id: '1', role: 'model', text: 'AIOVerse Shell v0.4 initialized.\nFull knowledge bank & Biometric data synced. \nType "services" for pricing or "show picture" to view Aion.\nWaiting for input...' }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -47,7 +46,7 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, setIsOpen }) => {
 
       let fullText = '';
       for await (const chunk of stream) {
-        const chunkText = (chunk as GenerateContentResponse).text;
+        const chunkText = chunk.text();
         if (chunkText) {
           fullText += chunkText;
           setMessages(prev => prev.map(msg =>
@@ -124,12 +123,28 @@ const ChatWidget: React.FC<ChatWidgetProps> = ({ isOpen, setIsOpen }) => {
                     </div>
                   ) : (
                     <div className="text-latte-400 pl-0">
-                      {msg.text.split('\n').map((line, i) => (
-                        <div key={i} className="min-h-[1.2em]">
-                          {i === 0 && <span className="text-accent-green mr-2">{'>'}</span>}
-                          {line}
-                        </div>
-                      ))}
+                      {msg.text.split('\n').map((line, i) => {
+                        // Regex to catch ![alt](url)
+                        const imgMatch = line.match(/!\[(.*?)\]\((.*?)\)/);
+
+                        return (
+                          <div key={i} className="min-h-[1.2em]">
+                            {i === 0 && <span className="text-accent-green mr-2">{'>'}</span>}
+                            {imgMatch ? (
+                              <div className="my-4 border border-espresso-700 p-1 bg-espresso-950/50 rounded-sm w-fit max-w-full">
+                                <img
+                                  src={imgMatch[2]}
+                                  alt={imgMatch[1]}
+                                  className="max-w-full h-auto rounded-sm opacity-80 hover:opacity-100 transition-opacity"
+                                />
+                                <p className="text-[10px] text-espresso-700 mt-1 italic font-mono uppercase">{imgMatch[1]}_biometric_data.raw</p>
+                              </div>
+                            ) : (
+                              line
+                            )}
+                          </div>
+                        );
+                      })}
                       {msg.isStreaming && <span className="inline-block w-2 h-4 bg-accent-green ml-1 animate-pulse align-text-bottom" />}
                     </div>
                   )}
