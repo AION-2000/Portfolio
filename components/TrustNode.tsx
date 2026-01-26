@@ -1,7 +1,9 @@
+"use client";
+
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
-import { Terminal, Users, Database, Code, ShieldCheck, Quote, ChevronRight, ChevronLeft } from 'lucide-react';
-import { RippleEffect } from './ui/Ripple';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Terminal, Users, Database, Code, ShieldCheck } from 'lucide-react';
+import { TestimonialSlider, type Review } from './ui/TestimonialSlider';
 
 const stats = [
     { label: "AI Models Deployed", value: 12, suffix: "+", icon: <Database size={16} /> },
@@ -10,21 +12,30 @@ const stats = [
     { label: "Uptime Protocol", value: 99.9, suffix: "%", icon: <ShieldCheck size={16} /> },
 ];
 
-const testimonials = [
+const reviews: Review[] = [
     {
-        user: "Researcher@DIU",
-        content: "Aion's approach to XAI implementation is remarkably clinical. The Grad-CAM visualizations were instrumental for our model debugging.",
-        tag: "ACADEMIC_LOG"
+        id: "1",
+        name: "Researcher",
+        affiliation: "DIU ACADEMIC_LOG",
+        quote: "Aion's approach to XAI implementation is remarkably clinical. The Grad-CAM visualizations were instrumental for our model debugging.",
+        imageSrc: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000",
+        thumbnailSrc: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200"
     },
     {
-        user: "Founder@AIOVerse",
-        content: "The terminal-style booking system and automated lead management transformed our technical onboarding process instantly.",
-        tag: "CLIENT_SIGNAL"
+        id: "2",
+        name: "Founding Lead",
+        affiliation: "AIOVerse CLIENT_SIGNAL",
+        quote: "The terminal-style booking system and automated lead management transformed our technical onboarding process instantly.",
+        imageSrc: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=1000",
+        thumbnailSrc: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=200"
     },
     {
-        user: "DevOps@GlobalNet",
-        content: "High-throughput logic and clean Dockerized deployments. Aion delivers with the precision of a perfect espresso pull.",
-        tag: "TECH_REVIEW"
+        id: "3",
+        name: "DevOps Engineer",
+        affiliation: "GlobalNet TECH_REVIEW",
+        quote: "High-throughput logic and clean Dockerized deployments. Aion delivers with the precision of a perfect espresso pull.",
+        imageSrc: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=1000",
+        thumbnailSrc: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=200"
     }
 ];
 
@@ -65,12 +76,6 @@ const StatCounter = ({ label, value, suffix, icon }: typeof stats[0]) => {
 };
 
 const TrustNode: React.FC = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const testimonialRef = useRef<HTMLDivElement>(null);
-
-    const next = () => setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    const prev = () => setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-
     return (
         <section id="trust" className="py-24 md:py-32 px-6 max-w-7xl mx-auto border-t border-espresso-700 relative overflow-hidden">
             {/* Header */}
@@ -93,69 +98,13 @@ const TrustNode: React.FC = () => {
                 ))}
             </div>
 
-            {/* Testimonials Console */}
-            <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-accent-orange/10 to-accent-blue/10 blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
-                <div className="relative bg-espresso-950 border border-espresso-700 rounded-sm overflow-hidden">
-                    {/* Console Header */}
-                    <div className="bg-espresso-900/50 px-4 py-3 border-b border-espresso-700 flex items-center justify-between">
-                        <div className="flex items-center gap-2">
-                            <Terminal size={14} className="text-accent-blue" />
-                            <span className="font-mono text-[10px] text-latte-400 uppercase tracking-widest">FEEDBACK_LOGS_V.4.2</span>
-                        </div>
-                        <div className="flex gap-2">
-                            <button onClick={prev} className="p-1 hover:text-white text-latte-500 transition-colors"><ChevronLeft size={16} /></button>
-                            <button onClick={next} className="p-1 hover:text-white text-latte-500 transition-colors"><ChevronRight size={16} /></button>
-                        </div>
-                    </div>
-
-                    {/* Console Body */}
-                    <div className="p-8 md:p-12 min-h-[300px] flex flex-col justify-center">
-                        <AnimatePresence mode="wait">
-                            <motion.div
-                                key={currentIndex}
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                exit={{ opacity: 0, x: -20 }}
-                                transition={{ duration: 0.4 }}
-                                className="space-y-6"
-                            >
-                                <div className="text-accent-green opacity-40 mb-4"><Quote size={32} /></div>
-                                <p className="font-mono text-lg md:text-2xl text-latte-200 leading-relaxed italic">
-                                    "{testimonials[currentIndex].content}"
-                                </p>
-                                <div className="flex items-center gap-4 pt-4 border-t border-espresso-800">
-                                    <div className="w-10 h-10 bg-espresso-800 rounded-full flex items-center justify-center font-mono text-accent-blue text-xs border border-espresso-700">
-                                        USR
-                                    </div>
-                                    <div>
-                                        <div className="font-mono text-sm text-latte-100 uppercase tracking-tighter">
-                                            {testimonials[currentIndex].user}
-                                        </div>
-                                        <div className="font-mono text-[9px] text-accent-blue uppercase tracking-widest mt-1 opacity-60">
-                                            {testimonials[currentIndex].tag}
-                                        </div>
-                                    </div>
-                                </div>
-                            </motion.div>
-                        </AnimatePresence>
-                    </div>
-
-                    {/* Console Footer */}
-                    <div className="bg-espresso-900/30 px-4 py-2 border-t border-espresso-700/50 flex items-center gap-4">
-                        <div className="flex gap-1.5">
-                            {testimonials.map((_, idx) => (
-                                <div
-                                    key={idx}
-                                    className={`w-1.5 h-1.5 rounded-full transition-colors ${idx === currentIndex ? 'bg-accent-orange' : 'bg-espresso-700'}`}
-                                />
-                            ))}
-                        </div>
-                        <span className="font-mono text-[8px] text-latte-600 uppercase tracking-widest">
-                            Signal {currentIndex + 1}/{testimonials.length}
-                        </span>
-                    </div>
+            {/* Testimonials Console Integration */}
+            <div className="relative group p-1 bg-gradient-to-r from-espresso-700/20 to-espresso-800/20 rounded-sm border border-espresso-700/50">
+                <div className="absolute top-4 left-6 z-20 flex items-center gap-2">
+                    <Terminal size={14} className="text-accent-blue" />
+                    <span className="font-mono text-[10px] text-latte-400 uppercase tracking-widest">FEEDBACK_LOGS_PRO_V.5.0</span>
                 </div>
+                <TestimonialSlider reviews={reviews} className="bg-transparent" />
             </div>
         </section>
     );
