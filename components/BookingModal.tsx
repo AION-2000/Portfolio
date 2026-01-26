@@ -30,7 +30,7 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, preselecte
         setStatus('loading');
 
         // This URL will be provided by the user from Google Apps Script setup
-        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwhIlGrc717Rt6kAxgrgT_57JXRHoFWtYHWRJXF3E4dZ-EudIperm-tywQPpHG7vEweMg/exec';
+        const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzbciu40X6TPZ3dwS8MpfosNTsmtkEniyHPRWhgZfK_YMaers2nv0y32jUNutKAydgbhA/exec';
 
         if (!SCRIPT_URL) {
             // For now, simulate success if no URL is provided (until the user sets it up)
@@ -41,14 +41,19 @@ const BookingModal: React.FC<BookingModalProps> = ({ isOpen, onClose, preselecte
             return;
         }
 
+        const formBody = new URLSearchParams();
+        Object.entries(formData).forEach(([key, value]) => {
+            formBody.append(key, value);
+        });
+
         try {
             await fetch(SCRIPT_URL, {
                 method: 'POST',
                 mode: 'no-cors', // Essential for Google Apps Script cross-origin
                 headers: {
-                    'Content-Type': 'text/plain', // Avoids preflight OPTIONS request
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
-                body: JSON.stringify(formData),
+                body: formBody.toString(),
             });
             setStatus('success');
         } catch (error) {
