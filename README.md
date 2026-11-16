@@ -1,6 +1,6 @@
 # Shihab Shahriar Aion Portfolio
 
-A high-performance, interactive personal portfolio website designed with a **Computer Science Engineer (CSE)** aesthetic. The site features a "Deep Espresso" & "Dark IDE" theme, utilizing advanced React 19 features, Framer Motion physics, and the Google Gemini API for a live terminal assistant.
+The source code for Shihab Shahriar Aion’s interactive developer portfolio, built with React, TypeScript, Tailwind CSS and Framer Motion, with a Gemini-powered terminal assistant.
 
 ## 🚀 Features
 
