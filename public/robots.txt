@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://shihab-aion.vercel.app/sitemap.xml
+Sitemap: https://aion-2000.github.io/Portfolio/sitemap.xml
