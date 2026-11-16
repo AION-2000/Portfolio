@@ -1,5 +1,4 @@
-# AIOVerse Robots Node
 User-agent: *
 Allow: /
 
-Sitemap: https://portfolio-aioverse.vercel.app/sitemap.xml
+Sitemap: https://shihab-aion.vercel.app/sitemap.xml
