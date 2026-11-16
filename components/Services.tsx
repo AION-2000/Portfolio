@@ -208,9 +208,9 @@ export default function Services({ onInitiate }: ServicesProps) {
     return (
         <div className="min-h-screen bg-espresso-950 text-latte-100 py-16 md:py-24 px-6 relative overflow-hidden">
             <Helmet>
-                <title>Services | AI & Web Solutions | AIOVerse</title>
-                <meta name="description" content="Explore professional AI, Machine Learning, and Web Development services. Specialized in XAI, Computer Vision, and NLP solutions for businesses and research." />
-                <link rel="canonical" href="https://portfolio-aioverse.vercel.app/services" />
+                <title>AI & Web Development Services | Shihab Shahriar Aion</title>
+                <meta name="description" content="Explore AI, machine learning, computer vision, NLP, and web development services by Shihab Shahriar Aion in Bangladesh." />
+                <link rel="canonical" href="https://shihab-aion.vercel.app/services" />
             </Helmet>
             <div className="absolute inset-0 pointer-events-none opacity-20">
                 <GridScan
