@@ -307,9 +307,9 @@ function App() {
     <HelmetProvider>
       <div className="bg-espresso-900 min-h-screen text-latte-100 selection:bg-accent-orange selection:text-espresso-950 relative overflow-x-hidden">
         <Helmet>
-          <title>AIOVerse | Shihab Shahriar Aion - AI & Web Developer</title>
-          <meta name="description" content="Official portfolio of Shihab Shahriar Aion. Specialist in AI, Machine Learning, XAI, and Full Stack Development. Discover innovative AI solutions." />
-          <link rel="canonical" href="https://portfolio-aioverse.vercel.app/" />
+          <title>Shihab Shahriar Aion | AI & Software Developer in Bangladesh</title>
+          <meta name="description" content="Shihab Shahriar Aion is a Bangladesh-based CSE graduate and AI software developer building machine learning, NLP, computer vision, and full-stack web projects." />
+          <link rel="canonical" href="https://shihab-aion.vercel.app/" />
         </Helmet>
         <CustomCursor />
 
