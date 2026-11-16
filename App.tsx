@@ -309,7 +309,7 @@ function App() {
         <Helmet>
           <title>Shihab Shahriar Aion | AI & Software Developer in Bangladesh</title>
           <meta name="description" content="Shihab Shahriar Aion is a Bangladesh-based CSE graduate and AI software developer building machine learning, NLP, computer vision, and full-stack web projects." />
-          <link rel="canonical" href="https://shihab-aion.vercel.app/" />
+          <link rel="canonical" href="https://aion-2000.github.io/Portfolio/" />
         </Helmet>
         <CustomCursor />
 
