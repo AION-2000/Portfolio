@@ -210,7 +210,7 @@ export default function Services({ onInitiate }: ServicesProps) {
             <Helmet>
                 <title>AI & Web Development Services | Shihab Shahriar Aion</title>
                 <meta name="description" content="Explore AI, machine learning, computer vision, NLP, and web development services by Shihab Shahriar Aion in Bangladesh." />
-                <link rel="canonical" href="https://shihab-aion.vercel.app/services" />
+                <link rel="canonical" href="https://aion-2000.github.io/Portfolio/services" />
             </Helmet>
             <div className="absolute inset-0 pointer-events-none opacity-20">
                 <GridScan
